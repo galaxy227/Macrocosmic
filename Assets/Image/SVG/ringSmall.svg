@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="ringSmall.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="8.385604"
+     inkscape:cx="289.06683"
+     inkscape:cy="362.58569"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="smallRing"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <path
+       id="path927"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke-width:3.57192"
+       d="M 292.51758 321.50391 A 37.795276 37.795276 0 0 0 254.72266 359.29883 A 37.795276 37.795276 0 0 0 292.51758 397.09375 A 37.795276 37.795276 0 0 0 330.3125 359.29883 A 37.795276 37.795276 0 0 0 292.51758 321.50391 z M 292.51758 323.39258 A 35.905512 35.905512 0 0 1 328.42383 359.29883 A 35.905512 35.905512 0 0 1 292.51758 395.20508 A 35.905512 35.905512 0 0 1 256.61133 359.29883 A 35.905512 35.905512 0 0 1 292.51758 323.39258 z "
+       transform="scale(0.26458333)" />
+  </g>
+</svg>
