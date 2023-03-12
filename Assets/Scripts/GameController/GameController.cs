@@ -15,23 +15,23 @@ public class GameController : MonoBehaviour
     [Header("Current Version")]
     [SerializeField] private int Major;
     [SerializeField] private int Minor;
-    [SerializeField] private int Build;
+    [SerializeField] private int Patch;
     [Header("Last Compatible Version")]
     [SerializeField] private int LastMajor;
     [SerializeField] private int LastMinor;
-    [SerializeField] private int LastBuild;
+    [SerializeField] private int LastPatch;
 
     public Version Version
     {
-        get { return new Version(Major, Minor, Build); }
+        get { return new Version(Major, Minor, Patch); }
     }
     public Version LastCompatibleVersion
     {
-        get { return new Version(LastMajor, LastMinor, LastBuild); }
+        get { return new Version(LastMajor, LastMinor, LastPatch); }
     }
 
     // GameState
-    public static GameState GameState;
+    [HideInInspector] public GameState GameState;
     public static UnityEvent ChangeGameState;
 
     public static GameController Instance
@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
     }
 
     // Game State
-    public static void SetGameState(GameState newGameState)
+    public void SetGameState(GameState newGameState)
     {
         if (newGameState == GameState.MainMenu)
         {
@@ -101,8 +101,8 @@ public class GameController : MonoBehaviour
             }
             else if (version.Minor == LastCompatibleVersion.Minor)
             {
-                // BUILD
-                if (version.Build >= LastCompatibleVersion.Build)
+                // PATCH
+                if (version.Patch >= LastCompatibleVersion.Patch)
                 {
                     // Compatible
                     return true;
@@ -131,16 +131,16 @@ public struct Version
 {
     public int Major;
     public int Minor;
-    public int Build;
+    public int Patch;
     public string VersionString
     {
-        get { return Major + "." + Minor + "." + Build; }
+        get { return Major + "." + Minor + "." + Patch; }
     }
 
-    public Version(int major, int minor, int build)
+    public Version(int major, int minor, int patch)
     {
         Major = major;
         Minor = minor;
-        Build = build;
+        Patch = patch;
     }
 }

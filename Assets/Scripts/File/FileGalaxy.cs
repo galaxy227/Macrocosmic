@@ -76,7 +76,7 @@ public class FileGalaxy
         // GameController
         VersionArray[0] = GameController.Instance.Version.Major;
         VersionArray[1] = GameController.Instance.Version.Minor;
-        VersionArray[2] = GameController.Instance.Version.Build;
+        VersionArray[2] = GameController.Instance.Version.Patch;
 
         // GalaxyGenerator
         Seed = GalaxyGenerator.Instance.Seed;
@@ -116,9 +116,9 @@ public class FileGalaxy
         if (GameController.Instance.IsVersionCompatible(Version)) // if file version is compatible with LastCompatibleVersion
         {
             // GameState
-            if (GameController.GameState != GameState.Play)
+            if (GameController.Instance.GameState != GameState.Play)
             {
-                GameController.SetGameState(GameState.Play);
+                GameController.Instance.SetGameState(GameState.Play);
             }
 
             // GalaxyGenerator

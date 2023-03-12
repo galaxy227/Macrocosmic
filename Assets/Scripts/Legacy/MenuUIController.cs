@@ -40,11 +40,11 @@ public class MenuUIController : MonoBehaviour
     }
     public void BackToMenu()
     {
-        if (GameController.GameState == GameState.MainMenu) // MainMenu
+        if (GameController.Instance.GameState == GameState.MainMenu) // MainMenu
         {
             OpenCanvas(MainMenu);
         }
-        else if (GameController.GameState == GameState.Play) // MiniMenu
+        else if (GameController.Instance.GameState == GameState.Play) // MiniMenu
         {
             CloseAllCanvas();
             gameObject.SetActive(false);
@@ -62,7 +62,7 @@ public class MenuUIController : MonoBehaviour
     // Event Methods
     private void OnChangeGameState()
     {
-        if (GameController.GameState == GameState.MainMenu)
+        if (GameController.Instance.GameState == GameState.MainMenu)
         {
             OpenCanvas(MainMenu);
             gameObject.SetActive(true);

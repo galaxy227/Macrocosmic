@@ -94,6 +94,15 @@ public static class Tools
             particleSystem.Clear();
         }
     }
+
+    // Asset
+    public static BuildNumberScriptableObject GetBuildNumber()
+    {
+        ResourceRequest request = Resources.LoadAsync("Build", typeof(BuildNumberScriptableObject));
+        BuildNumberScriptableObject buildScriptableObject = request.asset as BuildNumberScriptableObject;
+
+        return buildScriptableObject;
+    }
 }
 
 public struct CartesianCoord

@@ -96,7 +96,7 @@ public class PlayerCamera : MonoBehaviour
     {
         SetValues();
 
-        if (GameController.GameState == GameState.Play)
+        if (GameController.Instance.GameState == GameState.Play)
         {
             HandleInput();
             UpdatePosition();

@@ -23,8 +23,9 @@ public class GalaxyVFXController : MonoBehaviour
     [Header("CoreLight")]
     public GameObject coreLight;
     private Material coreLightMaterial;
+    [Header("Settings")]
+    public bool IsUpdate;
 
-    private bool isUpdate;
     private float lastZoomPercentage;
 
     public const float alphaMin = 0.1f;
@@ -33,15 +34,13 @@ public class GalaxyVFXController : MonoBehaviour
 
     private void Start()
     {
-        isUpdate = true;
-
         OnStart();
     }
     private void Update()
     {
-        if (isUpdate)
+        if (IsUpdate)
         {
-            if (GameController.GameState == GameState.Play && ViewController.ViewType == ViewType.Galaxy)
+            if (GameController.Instance.GameState == GameState.Play && ViewController.ViewType == ViewType.Galaxy)
             {
                 if (PlayerCamera.Instance.ZoomPercentage != lastZoomPercentage)
                 {
@@ -61,8 +60,8 @@ public class GalaxyVFXController : MonoBehaviour
     }
     private void UpdateVFX()
     {
-        EmitHazeParticles();
-        EmitAmbientParticles();
+        UpdateHazeParticles();
+        UpdateAmbientParticles();
         UpdateCoreLightAlpha();
     }
     private void DisableVFX()
@@ -168,6 +167,19 @@ public class GalaxyVFXController : MonoBehaviour
             hazeParticleSystem.Emit(emitParams, 1);
         }
     }
+    private void UpdateHazeParticles()
+    {
+        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[hazeParticleSystem.main.maxParticles];
+        int currentAmount = hazeParticleSystem.GetParticles(particles);
+
+        // Color
+        for (int i = 0; i < currentAmount; i++)
+        {
+            particles[i].startColor = GetZoomPercentageColor(hazeParticleDataList[i].color);
+        }
+
+        hazeParticleSystem.SetParticles(particles, currentAmount);
+    }
     private void SetHazeTexture()
     {
         hazeTexture = TextureGenerator.Instance.GenerateTexture(TextureGenerator.TextureType.Nebula, GalaxyGenerator.Instance.Seed);
@@ -271,6 +283,36 @@ public class GalaxyVFXController : MonoBehaviour
             }
         }
     }
+    private void UpdateAmbientParticles()
+    {
+        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ambientParticleSystem.main.maxParticles];
+        int currentAmount = ambientParticleSystem.GetParticles(particles);
+
+        // Color
+        for (int i = 0; i < currentAmount; i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    particles[i].startColor = GetZoomPercentageColor(ColorHelper.GetAmbientColor(ParticleType.Light));
+                    break;
+                case 1:
+                    particles[i].startColor = GetZoomPercentageColor(ColorHelper.GetAmbientColor(ParticleType.Center));
+                    break;
+                case 2:
+                    particles[i].startColor = GetZoomPercentageColor(ColorHelper.GetAmbientColor(ParticleType.Core));
+                    break;
+                case 3:
+                    particles[i].startColor = GetZoomPercentageColor(ColorHelper.GetAmbientColor(ParticleType.Mid));
+                    break;
+                case 4:
+                    particles[i].startColor = GetZoomPercentageColor(ColorHelper.GetAmbientColor(ParticleType.Outer));
+                    break;
+            }
+        }
+
+        ambientParticleSystem.SetParticles(particles, currentAmount);
+    }
 
     // CoreLight 
     private void InitializeCoreLight()
@@ -281,10 +323,6 @@ public class GalaxyVFXController : MonoBehaviour
         SetCLLight();
         SetCLColor();
         SetCLSimpleNoise();
-    }
-    private void UpdateCoreLightAlpha()
-    {
-        coreLightMaterial.SetFloat("_Alpha", GetZoomPercentageAlpha(1f));
     }
     private void SetCLSize()
     {
@@ -328,6 +366,10 @@ public class GalaxyVFXController : MonoBehaviour
             coreLightMaterial.SetFloat("_NoiseDivider", 20f);
         }
     }
+    private void UpdateCoreLightAlpha()
+    {
+        coreLightMaterial.SetFloat("_Alpha", GetZoomPercentageAlpha(1f));
+    }
 
     // Events
     private void OnChangeView()
@@ -338,7 +380,7 @@ public class GalaxyVFXController : MonoBehaviour
         }
         else
         {
-            coreLight.gameObject.SetActive(true);
+            InitializeVFX();
         }
     }
 

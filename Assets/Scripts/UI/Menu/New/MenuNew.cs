@@ -191,7 +191,7 @@ public class MenuNew : MonoBehaviour
     }
     public void StartNewGame()
     {
-        GameController.SetGameState(GameState.Play);
+        GameController.Instance.SetGameState(GameState.Play);
         GalaxyGenerator.Instance.ExecuteGenerate(false);
     }
 

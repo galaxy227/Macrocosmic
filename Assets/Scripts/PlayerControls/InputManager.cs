@@ -181,7 +181,7 @@ public class InputManager : MonoBehaviour
                 UIManager.Instance.HandleEscape();
             }
 
-            if (GameController.GameState == GameState.Play)
+            if (GameController.Instance.GameState == GameState.Play)
             {
                 if (IsKBShortcutAllowed)
                 {

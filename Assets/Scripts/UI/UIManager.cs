@@ -163,7 +163,7 @@ public class UIManager : MonoBehaviour
         CurrentActiveCanvas.gameObject.SetActive(true);
 
         // GameState Play
-        if (GameController.GameState == GameState.Play)
+        if (GameController.Instance.GameState == GameState.Play)
         {
             // Unit canvas
             DisableAllUnitCanvas();
@@ -194,7 +194,7 @@ public class UIManager : MonoBehaviour
     }
     public void OpenUnitCanvas()
     {
-        if (GameController.GameState == GameState.Play && InputManager.SelectedUnit != null)
+        if (GameController.Instance.GameState == GameState.Play && InputManager.SelectedUnit != null)
         {
             if (InputManager.SelectedUnit is CentralBody && (!CentralBodyCanvas.gameObject.activeSelf  || InputManager.SelectedUnit != CentralBodyCanvas.GetComponent<UICentralBody>().Unit))
             {
@@ -234,7 +234,7 @@ public class UIManager : MonoBehaviour
             }
             else
             {
-                if (GameController.GameState == GameState.Play)
+                if (GameController.Instance.GameState == GameState.Play)
                 {
                     DisableAllActiveCanvas();
                 }
@@ -242,7 +242,7 @@ public class UIManager : MonoBehaviour
         }
         else // Open mini menu
         {
-            if (GameController.GameState == GameState.Play)
+            if (GameController.Instance.GameState == GameState.Play)
             {
                 ToggleActiveCanvas(MiniMenuCanvas);
             }
@@ -252,11 +252,11 @@ public class UIManager : MonoBehaviour
     // Presets
     private void SetUI()
     {
-        if (GameController.GameState == GameState.MainMenu)
+        if (GameController.Instance.GameState == GameState.MainMenu)
         {
             SetMainMenu();
         }
-        else if (GameController.GameState == GameState.Play)
+        else if (GameController.Instance.GameState == GameState.Play)
         {
             SetPlay();
         }
@@ -276,7 +276,7 @@ public class UIManager : MonoBehaviour
     // Preset Helper
     public void SetAllStaticCanvas(bool isActive)
     {
-        if (GameController.GameState == GameState.Play)
+        if (GameController.Instance.GameState == GameState.Play)
         {
             TimeBarCanvas.gameObject.SetActive(isActive);
             TaskBarCanvas.gameObject.SetActive(isActive);
@@ -368,7 +368,7 @@ public class UIManager : MonoBehaviour
         }
 
         // GameState Play
-        if (GameController.GameState == GameState.Play)
+        if (GameController.Instance.GameState == GameState.Play)
         {
             // Unit canvas
             if (ViewController.ViewType == ViewType.System)

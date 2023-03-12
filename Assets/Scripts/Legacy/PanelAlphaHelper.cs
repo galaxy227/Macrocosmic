@@ -17,11 +17,11 @@ public class PanelAlphaHelper : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (GameController.GameState == GameState.MainMenu) // MainMenu
+        if (GameController.Instance.GameState == GameState.MainMenu) // MainMenu
         {
             image.color = MainMenuColor;
         }
-        else if (GameController.GameState == GameState.Play) // MiniMenu
+        else if (GameController.Instance.GameState == GameState.Play) // MiniMenu
         {
             image.color = MiniMenuColor;
         }

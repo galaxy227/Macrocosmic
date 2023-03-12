@@ -21,6 +21,10 @@ public class MainMenu : MonoBehaviour
     // Utility
     private void OnStart()
     {
-        VersionText.text = "v" + GameController.Instance.Version.VersionString;
+        SetVersionText();
+    }
+    private void SetVersionText()
+    {
+        VersionText.text = "v" + GameController.Instance.Version.VersionString + "." + Tools.GetBuildNumber().BuildNumber;
     }
 }

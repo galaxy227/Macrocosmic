@@ -78,7 +78,7 @@ public class UIController : MonoBehaviour
     }
     private void OnChangeGameState()
     {
-        if (GameController.GameState == GameState.Play)
+        if (GameController.Instance.GameState == GameState.Play)
         {
             gameObject.SetActive(true);
         }

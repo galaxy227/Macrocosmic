@@ -68,7 +68,7 @@ public class MenuSolarSystem : MonoBehaviour
     }
     private void OnChangeGameState()
     {
-        if (GameController.GameState != GameState.MainMenu)
+        if (GameController.Instance.GameState != GameState.MainMenu)
         {
             // Set View
             InputManager.SelectedSolarSystem = solarSystemInstance;

@@ -10,6 +10,6 @@ public class MiniMenu : MonoBehaviour
 {
     public void BackToMainMenu()
     {
-        GameController.SetGameState(GameState.MainMenu);
+        GameController.Instance.SetGameState(GameState.MainMenu);
     }
 }
