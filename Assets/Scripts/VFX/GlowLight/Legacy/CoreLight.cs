@@ -7,7 +7,7 @@ using System;
 
 public class CoreLight : MonoBehaviour
 {
-    private Material mat;
+    private Material coreLightMaterial;
 
     void Start()
     {
@@ -32,58 +32,58 @@ public class CoreLight : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        SetSize();
-        SetLight();
-        SetColor();
-        SetSimpleNoise();
+        SetCLSize();
+        SetCLLight();
+        SetCLColor();
+        SetCLSimpleNoise();
     }
-    private void SetSize()
+    private void SetCLSize()
     {
         float scale = 200 * ((int)GalaxyGenerator.Instance.sizeType + 1);
 
         gameObject.transform.localScale = new Vector3(scale, scale, 1);
     }
-    private void SetLight()
+    private void SetCLLight()
     {
         if (GalaxyGenerator.Instance.shapeType == GalaxyGenerator.ShapeType.Ring)
         {
-            mat.SetFloat("_Light", 0.7f);
+            coreLightMaterial.SetFloat("_Light", 0.7f);
         }
         else
         {
-            mat.SetFloat("_Light", 0.65f);
+            coreLightMaterial.SetFloat("_Light", 0.65f);
         }
     }
-    private void SetColor()
+    private void SetCLColor()
     {
-        mat.SetColor("_Color", ColorGenerator.Mixed);
+        coreLightMaterial.SetColor("_Color", ColorGenerator.Mixed);
     }
-    private void SetSimpleNoise()
+    private void SetCLSimpleNoise()
     {
         // Seed (Simple Noise Offset)
         System.Random rand = new System.Random(GalaxyGenerator.Instance.Seed);
         int seed = rand.Next(0, 10000);
-        mat.SetFloat("_Seed", seed);
+        coreLightMaterial.SetFloat("_Seed", seed);
 
         // Noise Divider
         if (GalaxyGenerator.Instance.shapeType == GalaxyGenerator.ShapeType.Spiral)
         {
-            mat.SetFloat("_NoiseDivider", 15f);
+            coreLightMaterial.SetFloat("_NoiseDivider", 15f);
         }
         else if (GalaxyGenerator.Instance.shapeType == GalaxyGenerator.ShapeType.Ellipitical)
         {
-            mat.SetFloat("_NoiseDivider", 15f);
+            coreLightMaterial.SetFloat("_NoiseDivider", 15f);
         }
         else if (GalaxyGenerator.Instance.shapeType == GalaxyGenerator.ShapeType.Ring)
         {
-            mat.SetFloat("_NoiseDivider", 20f);
+            coreLightMaterial.SetFloat("_NoiseDivider", 20f);
         }
     }
 
     // Utility
     private void OnStart()
     {
-        mat = GetComponent<Renderer>().sharedMaterial;
+        coreLightMaterial = GetComponent<Renderer>().sharedMaterial;
 
         gameObject.SetActive(false);
 

@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StarsForeground
-  m_Shader: {fileID: -6465566751694194690, guid: 19d4a1e7294f4934caf71c21c604cd16, type: 3}
+  m_Name: Stars
+  m_Shader: {fileID: -6465566751694194690, guid: 0b3ed077c3619f54696488a064d3f809, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -90,9 +90,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_4fa3531729254a988ab59501ff4768c4: 60
-    - Vector1_60457d30b13a457daae36dc0f194e3bc: 0.03
+    - Vector1_60457d30b13a457daae36dc0f194e3bc: 0.015
     - Vector1_6bc903762ff846f2aa10ff967fdb43c3: 100
-    - Vector1_b719fb5898c544058e3d2d40b6b062fc: 20
+    - Vector1_b719fb5898c544058e3d2d40b6b062fc: 100
     - _AlphaClip: 0
     - _Blend: 0
     - _Brightness: 4

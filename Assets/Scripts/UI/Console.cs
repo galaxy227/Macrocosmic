@@ -287,7 +287,6 @@ public class Console : MonoBehaviour
             // TextureGenerator
             TextureGenerator textureGenerator = obj.GetComponent<TextureGenerator>();
             textureGenerator.textureType = TextureGenerator.TextureType.Nebula;
-            textureGenerator.usePreset = true;
         }
 
         yield return null;

@@ -127,3 +127,149 @@ public static class ColorGenerator
         Contrast = Color.white - Primary;
     }
 }
+
+public static class ColorHelper
+{
+    // Color
+    public static Color GetSolarSystemColor(System.Random rand, Vector3 position)
+    {
+        // DECLARE
+        Color solarSystemColor = new Color(1, 1, 1, 1);
+
+        // COLOR
+        int colorSeed = rand.Next(0, 10);
+
+        if (colorSeed <= 3) // 40%
+        {
+            solarSystemColor = ColorGenerator.Primary;
+        }
+        else if (colorSeed <= 6) // 30%
+        {
+            solarSystemColor = ColorGenerator.Secondary;
+        }
+        else if (colorSeed <= 8) // 20%
+        {
+            solarSystemColor = ColorGenerator.Mixed;
+        }
+        else if (colorSeed <= 9) // 10%
+        {
+            solarSystemColor = ColorGenerator.Contrast;
+        }
+
+        // ALPHA
+        float alpha = GetSolarSystemAlpha(position);
+        solarSystemColor = SetAlpha(solarSystemColor, alpha);
+
+        return solarSystemColor;
+    } // Nebula
+    public static Color GetAmbientColor(ParticleType particleType)
+    {
+        Color color = new Color(1, 1, 1, 1);
+
+        switch (particleType)
+        {
+            case ParticleType.Light:
+                color = ColorGenerator.Contrast;
+                break;
+            case ParticleType.Center:
+                color = ColorGenerator.Contrast;
+                break;
+            case ParticleType.Core:
+                color = ColorGenerator.Contrast;
+                break;
+            case ParticleType.Mid:
+                color = ColorGenerator.Contrast;
+                break;
+            case ParticleType.Outer:
+                color = ColorGenerator.Contrast;
+                break;
+            default:
+                break;
+        }
+
+        // ALPHA
+        float alpha = GetAmbientAlpha(particleType);
+        color = SetAlpha(color, alpha);
+
+        return color;
+    } // Ambient
+
+    // Alpha Helper
+    private static float GetSolarSystemAlpha(Vector3 position)
+    {
+        float alpha = 1;
+
+        float multiplier = 3;
+
+        // Calculate distance multiplier
+        float distance = Vector3.Distance(Vector3.zero, position);
+        float distanceMultiplier = Mathf.InverseLerp(GalaxyGenerator.Instance.Radius * 1.1f, 0, distance);
+
+        // Galaxy Size
+        switch (GalaxyGenerator.Instance.sizeType)
+        {
+            case GalaxyGenerator.SizeType.Tiny:
+                alpha = 0.09f * multiplier;
+                break;
+            case GalaxyGenerator.SizeType.Small:
+                alpha = 0.08f * multiplier;
+                break;
+            case GalaxyGenerator.SizeType.Medium:
+                alpha = 0.07f * multiplier;
+                break;
+            case GalaxyGenerator.SizeType.Large:
+                alpha = 0.06f * multiplier;
+                break;
+            case GalaxyGenerator.SizeType.Huge:
+                alpha = 0.05f * multiplier;
+                break;
+            default:
+                alpha = 0 / 255f;
+                break;
+        }
+
+        // Galaxy Shape
+        if (GalaxyGenerator.Instance.shapeType == GalaxyGenerator.ShapeType.Ring)
+        {
+            alpha *= 1.5f;
+        }
+
+        return Mathf.Clamp01(alpha * distanceMultiplier);
+    }
+    private static float GetAmbientAlpha(ParticleType particleType)
+    {
+        float alpha = 1;
+
+        if (particleType == ParticleType.Light)
+        {
+            alpha = 0.10f;
+        }
+        else if (particleType == ParticleType.Center)
+        {
+            alpha = 0.08f;
+        }
+        else if (particleType == ParticleType.Core)
+        {
+            alpha = 0.06f;
+        }
+        else if (particleType == ParticleType.Mid)
+        {
+            alpha = 0.04f;
+        }
+        else if (particleType == ParticleType.Outer)
+        {
+            alpha = 0.02f;
+        }
+
+        if (GalaxyGenerator.Instance.shapeType == GalaxyGenerator.ShapeType.Ellipitical)
+        {
+            alpha = alpha * 0.75f;
+        }
+
+        return alpha;
+    }
+    private static Color SetAlpha(Color color, float alpha)
+    {
+        return new Color(color.r, color.g, color.b, alpha);
+    }
+}

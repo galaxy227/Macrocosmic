@@ -83,6 +83,7 @@ Material:
     - Vector1_9a5e95ab143643408b8366baba2ca7ae: 15
     - Vector1_d470b6cc0f6f4afbb5b5324f275617af: 0.85
     - Vector1_f29483a4104743dfb05a3f21e4cad6c4: 0
+    - _Alpha: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -101,11 +102,11 @@ Material:
     - _Metallic: 0
     - _NoiseDivider: 15
     - _OcclusionStrength: 1
-    - _Offset: 100.89932
+    - _Offset: 100.69841
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Seed: 7210
+    - _Seed: 3567
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -118,7 +119,7 @@ Material:
     m_Colors:
     - Color_0a409d73ccfe4a8594eeb4d4869003b2: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.47750002, g: 0.6025, b: 0.875, a: 1}
+    - _Color: {r: 0.565, g: 0.875, b: 0.69, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

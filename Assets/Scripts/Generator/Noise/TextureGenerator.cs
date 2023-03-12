@@ -24,11 +24,10 @@ public class TextureGenerator : MonoBehaviour
     public TextureType textureType;
     public int size;
     public int seed;
-    public bool usePreset;
-    public bool randomSeed;
     public bool isFalloff;
     public bool isWhite;
     public bool isTransparent;
+    public bool isSmooth;
 
     [Header("Perlin")]
     public float scale;
@@ -40,18 +39,29 @@ public class TextureGenerator : MonoBehaviour
     [Header("Random")]
     public float power;
 
-    // Texture
-    public Texture2D GenerateTexture(TextureType typeOfTexture)
+    public static TextureGenerator Instance
     {
-        if (usePreset)
+        get { return instance; }
+    }
+    private static TextureGenerator instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    // Texture
+    public Texture2D GenerateTexture(TextureType typeOfTexture, int seed, bool isPreset = true)
+    {
+        if (isPreset)
         {
             SetPresetValues(typeOfTexture);
-        }
-
-        if (randomSeed)
-        {
-            System.Random rand = new System.Random();
-            seed = rand.Next(0, 9999999);
         }
 
         float[,] noiseMap = GenerateNoise();
@@ -76,6 +86,11 @@ public class TextureGenerator : MonoBehaviour
             noiseMap = GeneratePerlinRandomNoiseMap();
         }
 
+        if (isSmooth)
+        {
+            noiseMap = SmoothBrightness(noiseMap);
+        }
+
         if (isFalloff)
         {
             float[,] falloffMap = Noise.GenerateCircleFalloffMap(size);
@@ -97,18 +112,6 @@ public class TextureGenerator : MonoBehaviour
 
         float[,] perlin = Noise.GeneratePerlinNoiseMap(size, seed, scale, octaves, persistence, lacunarity, offset);
         float[,] random = Noise.GenerateRandomNoiseMap(size, seed, power);
-
-        // PERLIN, make brightness of textures more consistent
-        for (int y = 0; y < size; y++)
-        {
-            for (int x = 0; x < size; x++)
-            {
-                float multiplier = Mathf.Lerp(0, 0.5f, perlin[x, y]);
-                float subtractAmount = perlin[x, y] * multiplier;
-
-                perlin[x, y] = perlin[x, y] - subtractAmount;
-            }
-        }
 
         // RANDOM, Calculate Random falloff once before again calculating the entire texture's falloff to reduce Noise near edges of texture
         if (isFalloff)
@@ -133,15 +136,19 @@ public class TextureGenerator : MonoBehaviour
             }
         }
 
-        // Get max value from noiseMap
-        float maxValue = Noise.GetMaxValueFromNoiseMap(noiseMap);
-
-        // InverseLerp noiseMap values between 0 and maxValue
+        return noiseMap;
+    }
+    // Helper
+    private float[,] SmoothBrightness(float[,] noiseMap)
+    {
         for (int y = 0; y < size; y++)
         {
             for (int x = 0; x < size; x++)
             {
-                Mathf.InverseLerp(0, maxValue, noiseMap[x, y]);
+                float multiplier = Mathf.Lerp(0, 0.5f, noiseMap[x, y]);
+                float subtractAmount = noiseMap[x, y] * multiplier;
+
+                noiseMap[x, y] = noiseMap[x, y] - subtractAmount;
             }
         }
 
@@ -179,24 +186,23 @@ public class TextureGenerator : MonoBehaviour
     }
 
     // Utility
-    public void SetPresetValues(TextureType typeOfTexture)
+    private void SetPresetValues(TextureType typeOfTexture)
     {
         if (typeOfTexture == TextureType.Nebula)
         {
             algorithmType = AlgorithmType.Perlin;
 
-            size = 256;
-            scale = 60;
+            size = 768;
+            scale = 112.5f;
             octaves = 4;
             persistence = 0.6f; // 0.5f
             lacunarity = 1.8f; // 2f
             offset = new Vector2(0, 0);
 
-            randomSeed = false;
             isFalloff = true;
             isWhite = false;
             isTransparent = true;
-            usePreset = false;
+            isSmooth = true;
         }
         else if (typeOfTexture == TextureType.Star)
         {
@@ -205,11 +211,10 @@ public class TextureGenerator : MonoBehaviour
             size = 256;
             power = 100;
 
-            randomSeed = false;
             isFalloff = true;
             isWhite = false;
             isTransparent = true;
-            usePreset = false;
+            isSmooth = false;
         }
         else if (typeOfTexture == TextureType.NebulaStar)
         {
@@ -225,11 +230,10 @@ public class TextureGenerator : MonoBehaviour
             // Random
             power = 200;
 
-            randomSeed = false;
             isFalloff = true;
             isWhite = false;
             isTransparent = true;
-            usePreset = false;
+            isSmooth = true;
         }
     }
 }

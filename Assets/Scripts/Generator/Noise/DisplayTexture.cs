@@ -17,7 +17,7 @@ public class DisplayTexture : MonoBehaviour
 
     public void DrawTexture()
     {
-        Texture2D texture = textureGenerator.GenerateTexture(textureGenerator.textureType);
+        Texture2D texture = textureGenerator.GenerateTexture(textureGenerator.textureType, textureGenerator.seed);
 
         textureRender.sharedMaterial.mainTexture = texture;
         textureRender.transform.localScale = new Vector3(texture.width, texture.height, 1);

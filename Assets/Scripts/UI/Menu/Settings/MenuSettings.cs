@@ -92,8 +92,12 @@ public class MenuSettings : MonoBehaviour
     }
     public void SetDefaultSettings()
     {
-        // Camera
+        // Zoom
         PlayerPrefs.SetFloat(zoomReference, zoomDefault);
+        PlayerCamera.Instance.UserZoomSpeed = zoomDefault;
+
+        // Movement
         PlayerPrefs.SetFloat(movementReference, movementDefault);
+        PlayerCamera.Instance.UserKeySpeed = movementDefault;
     }
 }

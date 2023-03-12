@@ -84,6 +84,16 @@ public static class Tools
 
         return childList;
     }
+
+    // Particles
+    public static void ClearParticleSystem(ParticleSystem particleSystem)
+    {
+        if (particleSystem != null)
+        {
+            particleSystem.Stop();
+            particleSystem.Clear();
+        }
+    }
 }
 
 public struct CartesianCoord
