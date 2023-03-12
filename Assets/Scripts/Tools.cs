@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEditor;
 
 //int starTypeAmount = System.Enum.GetNames(typeof(Star.StarType)).Length;
 
@@ -96,12 +97,12 @@ public static class Tools
     }
 
     // Asset
-    public static BuildNumberScriptableObject GetBuildNumber()
+    public static VersionScriptableObject GetVersionObject()
     {
-        ResourceRequest request = Resources.LoadAsync("Build", typeof(BuildNumberScriptableObject));
-        BuildNumberScriptableObject buildScriptableObject = request.asset as BuildNumberScriptableObject;
+        ResourceRequest request = Resources.LoadAsync("VersionObj", typeof(VersionScriptableObject));
+        VersionScriptableObject versionObj = request.asset as VersionScriptableObject;
 
-        return buildScriptableObject;
+        return versionObj;
     }
 }
 

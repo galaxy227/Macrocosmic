@@ -11,24 +11,7 @@ public enum GameState
 }
 public class GameController : MonoBehaviour
 {
-    // Version
-    [Header("Current Version")]
-    [SerializeField] private int Major;
-    [SerializeField] private int Minor;
-    [SerializeField] private int Patch;
-    [Header("Last Compatible Version")]
-    [SerializeField] private int LastMajor;
-    [SerializeField] private int LastMinor;
-    [SerializeField] private int LastPatch;
-
-    public Version Version
-    {
-        get { return new Version(Major, Minor, Patch); }
-    }
-    public Version LastCompatibleVersion
-    {
-        get { return new Version(LastMajor, LastMinor, LastPatch); }
-    }
+    public VersionScriptableObject VersionObj;
 
     // GameState
     [HideInInspector] public GameState GameState;
@@ -46,7 +29,10 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-        SetGameState(GameState.MainMenu);
+        if (VersionObj != null)
+        {
+            SetGameState(GameState.MainMenu);
+        }
     }
 
     // Game State
@@ -82,65 +68,7 @@ public class GameController : MonoBehaviour
         {
             ChangeGameState = new UnityEvent();
         }
-    }
-    public bool IsVersionCompatible(Version version)
-    {
-        // MAJOR
-        if (version.Major > LastCompatibleVersion.Major)
-        {
-            // Compatible
-            return true;
-        }
-        else if (version.Major == LastCompatibleVersion.Major)
-        {
-            // MINOR
-            if (version.Minor > LastCompatibleVersion.Minor)
-            {
-                // Compatible
-                return true;
-            }
-            else if (version.Minor == LastCompatibleVersion.Minor)
-            {
-                // PATCH
-                if (version.Patch >= LastCompatibleVersion.Patch)
-                {
-                    // Compatible
-                    return true;
-                }
-                else
-                {
-                    // Incompatible
-                    return false;
-                }
-            }
-            else
-            {
-                // Incompatible
-                return false;
-            }
-        }
-        else
-        {
-            // Incompatible
-            return false;
-        }
-    }
-}
 
-public struct Version
-{
-    public int Major;
-    public int Minor;
-    public int Patch;
-    public string VersionString
-    {
-        get { return Major + "." + Minor + "." + Patch; }
-    }
-
-    public Version(int major, int minor, int patch)
-    {
-        Major = major;
-        Minor = minor;
-        Patch = patch;
+        VersionObj = Tools.GetVersionObject();
     }
 }

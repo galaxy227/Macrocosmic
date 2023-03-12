@@ -52,11 +52,14 @@ public class FileGalaxy
     // SAVE FILE
     public string FileName;
     // GameController
-    public Version Version
+    public VersionData VersionData
     {
-        get { return new Version(VersionArray[0], VersionArray[1], VersionArray[2]); }
+        get 
+        {
+            return new VersionData(VersionDataArray[0], VersionDataArray[1], VersionDataArray[2]); 
+        }
     }
-    [SerializeField] private int[] VersionArray = new int[3];
+    [SerializeField] private int[] VersionDataArray = new int[3];
     // GalaxyGenerator
     public int Seed;
     public string Name;
@@ -74,9 +77,9 @@ public class FileGalaxy
         FileName = fileName;
 
         // GameController
-        VersionArray[0] = GameController.Instance.Version.Major;
-        VersionArray[1] = GameController.Instance.Version.Minor;
-        VersionArray[2] = GameController.Instance.Version.Patch;
+        VersionDataArray[0] = GameController.Instance.VersionObj.Major;
+        VersionDataArray[1] = GameController.Instance.VersionObj.Minor;
+        VersionDataArray[2] = GameController.Instance.VersionObj.Patch;
 
         // GalaxyGenerator
         Seed = GalaxyGenerator.Instance.Seed;
@@ -113,7 +116,7 @@ public class FileGalaxy
         ValidateMotherSaveFolder();
 
         // Deserialize
-        if (GameController.Instance.IsVersionCompatible(Version)) // if file version is compatible with LastCompatibleVersion
+        if (GameController.Instance.VersionObj.IsVersionCompatible(VersionData)) // if file version is compatible with LastCompatibleVersion
         {
             // GameState
             if (GameController.Instance.GameState != GameState.Play)

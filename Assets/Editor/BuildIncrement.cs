@@ -12,15 +12,23 @@ public class BuildIncrement : IPreprocessBuildWithReport
     public void OnPreprocessBuild(BuildReport report)
     {
         // Previous
-        BuildNumberScriptableObject previousBuildObj = Tools.GetBuildNumber();
+        VersionScriptableObject versionObj = Tools.GetVersionObject();
 
         // New
-        BuildNumberScriptableObject newBuildObj = ScriptableObject.CreateInstance<BuildNumberScriptableObject>();
-        newBuildObj.BuildNumber = previousBuildObj.BuildNumber + 1;
+        VersionScriptableObject newVersionObj = ScriptableObject.CreateInstance<VersionScriptableObject>();
+
+        newVersionObj.Major = versionObj.Major;
+        newVersionObj.Minor = versionObj.Minor;
+        newVersionObj.Patch = versionObj.Patch;
+        newVersionObj.LastMajor = versionObj.LastMajor;
+        newVersionObj.LastMinor = versionObj.LastMinor;
+        newVersionObj.LastPatch = versionObj.LastPatch;
+
+        newVersionObj.Build = versionObj.Build + 1;
 
         // Save
-        AssetDatabase.DeleteAsset("Assets/Resources/Build.asset"); // Delete any old build.asset
-        AssetDatabase.CreateAsset(newBuildObj, "Assets/Resources/Build.asset"); // Create the new one with correct build number before build starts
+        AssetDatabase.DeleteAsset("Assets/Resources/VersionObj.asset"); // Delete any old build.asset
+        AssetDatabase.CreateAsset(newVersionObj, "Assets/Resources/VersionObj.asset"); // Create the new one with correct build number before build starts
         AssetDatabase.SaveAssets();
     }
 }

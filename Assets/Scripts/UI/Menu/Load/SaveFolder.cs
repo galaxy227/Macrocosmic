@@ -69,12 +69,12 @@ public class SaveFolder : MonoBehaviour
         string[] filePathArray = Directory.GetFiles(saveFolderPath);
         FileGalaxy fileGalaxy = FileGalaxy.ReadGalaxy(Path.GetFileName(saveFolderPath), Path.GetFileName(filePathArray[0]));
         
-        if (!GameController.Instance.IsVersionCompatible(fileGalaxy.Version))
+        if (!GameController.Instance.VersionObj.IsVersionCompatible(fileGalaxy.VersionData))
         {
             LoadLatestBlocker.gameObject.SetActive(true);
             IncompatibleVersionSprite.gameObject.SetActive(true);
 
-            spriteToolTip.content = "v" + fileGalaxy.Version.VersionString + " is incompatible with " + "v" + GameController.Instance.Version.VersionString;
+            spriteToolTip.content = "v" + fileGalaxy.VersionData.VersionString + " is incompatible with " + "v" + GameController.Instance.VersionObj.VersionData.VersionString;
         }
         else
         {

@@ -309,7 +309,7 @@ public class Console : MonoBehaviour
     private void UpdatePanelDebugText()
     {
         // Version
-        VersionText.text = GameController.Instance.Version.VersionString;
+        VersionText.text = GameController.Instance.VersionObj.VersionData.VersionString;
 
         // FPS
         if (Time.time > updateTime)

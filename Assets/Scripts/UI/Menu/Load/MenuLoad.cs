@@ -82,9 +82,6 @@ public class MenuLoad : MonoBehaviour
 
         FileWatcher = new MenuLoadFileWatcher();
 
-        //saveFileSortType = SaveFileSortType.Date;
-        //isAscending = true;
-
         // Blocker
         toolTipBlocker = LoadSelectedBlocker.GetComponent<ToolTipTrigger>();
         imageBlocker = LoadSelectedBlocker.GetComponent<Image>();
@@ -296,7 +293,7 @@ public class MenuLoad : MonoBehaviour
         }
         else
         {
-            if (GameController.Instance.IsVersionCompatible(SelectedSaveFile.FileGalaxyDeserialized.Version))
+            if (GameController.Instance.VersionObj.IsVersionCompatible(SelectedSaveFile.FileGalaxyDeserialized.VersionData))
             {
                 // Compatible version
                 LoadSelectedBlocker.SetActive(false);
