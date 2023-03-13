@@ -98,7 +98,7 @@ public class GalaxyVFXController : MonoBehaviour
         hazeMaterial.mainTexture = hazeTexture;
 
         // Set ParticleData
-        float emitChance = 1f - (0.1f * (int)GalaxyGenerator.Instance.sizeType);
+        float emitChance = 0.8f - (0.05f * (int)GalaxyGenerator.Instance.sizeType);
 
         for (int i = 0; i < GalaxyGenerator.SolarSystemList.Count; i++)
         {

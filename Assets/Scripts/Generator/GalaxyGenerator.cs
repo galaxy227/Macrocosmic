@@ -386,11 +386,11 @@ public class GalaxyGenerator : MonoBehaviour
 
                 // Get Polar Position (Distance and Angle)
                 float distance = 0;
-                if (i < positions.Length * 0.75f)
+                if (i < positions.Length * 0.75f) // First three quarters anywhere
                 {
                     distance = Mathf.Lerp(Radius * coreMultiplier, Radius, positions[i]);
                 }
-                else
+                else // Last quarter beyond "radiusOfCore"
                 {
                     distance = Mathf.Lerp(radiusOfCore, Radius, positions[i]);
                 }
