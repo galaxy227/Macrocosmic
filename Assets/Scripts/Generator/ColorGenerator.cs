@@ -133,10 +133,14 @@ public static class ColorHelper
     // Color
     public static Color GetSolarSystemColor(System.Random rand, Vector3 position)
     {
-        // DECLARE
         Color solarSystemColor = new Color(1, 1, 1, 1);
 
-        // COLOR
+        // Set Color
+        //float distance = Vector3.Distance(Vector3.zero, position);
+
+        //float distanceLerp = Mathf.InverseLerp(0, GalaxyGenerator.Instance.Radius, distance);
+        //solarSystemColor = Color.Lerp(ColorGenerator.Primary, ColorGenerator.Secondary, distanceLerp);
+
         int colorSeed = rand.Next(0, 10);
 
         if (colorSeed <= 3) // 40%
@@ -156,7 +160,7 @@ public static class ColorHelper
             solarSystemColor = ColorGenerator.Contrast;
         }
 
-        // ALPHA
+        // Set Alpha
         float alpha = GetSolarSystemAlpha(position);
         solarSystemColor = SetAlpha(solarSystemColor, alpha);
 

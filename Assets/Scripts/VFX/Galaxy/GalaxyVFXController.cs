@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public enum ParticleType
 {
@@ -24,13 +25,18 @@ public class GalaxyVFXController : MonoBehaviour
     public GameObject coreLight;
     private Material coreLightMaterial;
     [Header("Settings")]
-    public bool IsUpdate;
-
-    private float lastZoomPercentage;
-
-    public const float alphaMin = 0.1f;
+    // Alpha
+    public bool IsUpdateAlpha;
+    private const float alphaMin = 0.1f;
     private const float zoomThreshold = 0.5f;
     private const float alphaThreshold = 0.75f;
+    private float lastZoomPercentage;
+    // Neighbors
+    //private const int neighborCount = 1; // Amount of closest neighbors considered to evaluate whether particle should emit
+    //private const int neighborThreshold = 1; // If closest neighbors emits >= neighborThreshold, particle should not emit
+
+    public int neighborCount;
+    public int neighborThreshold;
 
     private void Start()
     {
@@ -38,7 +44,7 @@ public class GalaxyVFXController : MonoBehaviour
     }
     private void Update()
     {
-        if (IsUpdate)
+        if (IsUpdateAlpha)
         {
             if (GameController.Instance.GameState == GameState.Play && ViewController.ViewType == ViewType.Galaxy)
             {
@@ -97,46 +103,115 @@ public class GalaxyVFXController : MonoBehaviour
         // Material
         hazeMaterial.mainTexture = hazeTexture;
 
-        // Set ParticleData
-        float emitChance = 0.8f - (0.05f * (int)GalaxyGenerator.Instance.sizeType);
-
         for (int i = 0; i < GalaxyGenerator.SolarSystemList.Count; i++)
         {
-            float emitSeed = (float)rand.NextDouble();
             HazeParticleData particleData = new HazeParticleData();
 
-            if (emitSeed <= emitChance)
-            {
-                particleData.isEmit = true;
+            // Color of particle
+            Color color = ColorHelper.GetSolarSystemColor(rand, GalaxyGenerator.SolarSystemList[i].transform.position);
+            particleData.color = color;
 
-                // Color of particle
-                Color color = ColorHelper.GetSolarSystemColor(rand, GalaxyGenerator.SolarSystemList[i].transform.position);
-                particleData.color = color;
+            // Size
+            int sizeConstant = 50;
+            float sizeBase = sizeConstant - (5 * GalaxyGenerator.Instance.NumArms) + (sizeConstant * ((int)GalaxyGenerator.Instance.sizeType + 1));
+            float multiplier = 0.25f;
+            float sizeMax = sizeBase + (sizeBase * multiplier);
+            float sizeMin = sizeBase - (sizeBase * multiplier);
+            float sizePercentageSeed = rand.Next(0, 100) / 100f; // Random
 
-                // Size
-                int sizeConstant = 50;
-                float sizeBase = sizeConstant - (5 * GalaxyGenerator.Instance.NumArms) + (sizeConstant * ((int)GalaxyGenerator.Instance.sizeType + 1));
-                float multiplier = 0.25f;
-                float sizeMax = sizeBase + (sizeBase * multiplier);
-                float sizeMin = sizeBase - (sizeBase * multiplier);
-                float sizePercentageSeed = rand.Next(0, 100) / 100f; // Random
+            float size = Mathf.Lerp(sizeMin, sizeMax, sizePercentageSeed);
+            particleData.size = size;
 
-                float size = Mathf.Lerp(sizeMin, sizeMax, sizePercentageSeed);
-                particleData.size = size;
+            // Rotation
+            int degrees = 30;
+            particleData.rotation = new Vector3(0, 0, i * degrees);
 
-                // Rotation
-                int degrees = 30;
-                particleData.rotation = new Vector3(0, 0, i * degrees);
-
-                // Position
-                particleData.position = new Vector3(GalaxyGenerator.SolarSystemList[i].transform.position.x, GalaxyGenerator.SolarSystemList[i].transform.position.y, 0);
-            }
+            // Position
+            particleData.position = new Vector3(GalaxyGenerator.SolarSystemList[i].transform.position.x, GalaxyGenerator.SolarSystemList[i].transform.position.y, 0);
 
             // Add particleData to particleDataList
             hazeParticleDataList.Add(particleData);
         }
 
-        EmitHazeParticles();
+        // Set neighorList and isEmit
+        for (int i = 0; i < hazeParticleDataList.Count; i++)
+        {
+            HazeParticleData particleData = hazeParticleDataList[i];
+            particleData.neighborList = new List<HazeParticleData>();
+
+            // Sort all particles by distance
+            List<HazeParticleData> sortByDistance = new List<HazeParticleData>(hazeParticleDataList);
+
+            for (int k = sortByDistance.Count - 1; k >= 0; k--)
+            {
+                if (sortByDistance[k].position == particleData.position)
+                {
+                    sortByDistance.RemoveAt(k);
+                }
+            }
+
+            sortByDistance = sortByDistance.OrderBy(o => Vector3.Distance(o.position, particleData.position)).ToList();
+
+            // Set neighorList for particle
+            int count = 0;
+
+            if (neighborCount > sortByDistance.Count)
+            {
+                count = sortByDistance.Count;
+            }
+            else
+            {
+                count = neighborCount;
+            }
+
+            for (int j = 0; j < count; j++)
+            {
+                particleData.neighborList.Add(sortByDistance[j]);
+            }
+
+            // Set isEmit for particle
+            int neighborEmitCount = 0;
+            float distanceThreshold = GalaxyGenerator.Instance.Radius * 0.9f; // force emit if distance between closest neighbor is greater than distanceThreshold
+
+            if (Vector3.Distance(particleData.position, Vector3.zero) > distanceThreshold) 
+            {
+                particleData.isEmit = true;
+                Debug.Log("Force Emit");
+            }
+            else
+            {
+                foreach (HazeParticleData neighbor in particleData.neighborList)
+                {
+                    if (neighbor.isEmit)
+                    {
+                        neighborEmitCount++;
+                    }
+                }
+
+                if (neighborEmitCount < neighborThreshold)
+                {
+                    particleData.isEmit = true;
+                }
+                else
+                {
+                    particleData.isEmit = false;
+                }
+            }
+
+            // Set particle
+            hazeParticleDataList[i] = particleData;
+        }
+
+        // Remove particles that do not emit
+        for (int i = hazeParticleDataList.Count - 1; i >= 0; i--)
+        {
+            if (!hazeParticleDataList[i].isEmit)
+            {
+                hazeParticleDataList.RemoveAt(i);
+            }
+        }
+
+        EmitHazeParticles(); // Particles do not show on first frame of GameState.Play if Emit is not called in Initialize. This only matters when using the console to generate galaxies.
     }
     private void EmitHazeParticles()
     {
@@ -147,24 +222,27 @@ public class GalaxyVFXController : MonoBehaviour
         var emitParams = new ParticleSystem.EmitParams();
         System.Random rand = new System.Random(GalaxyGenerator.Instance.Seed);
 
-        // Emit Particles
-        for (int i = 0; i < GalaxyGenerator.SolarSystemList.Count; i++)
+        for (int i = 0; i < hazeParticleDataList.Count; i++)
         {
-            // Color of particle
-            emitParams.startColor = GetZoomPercentageColor(hazeParticleDataList[i].color);
+            // Emit particle
+            if (hazeParticleDataList[i].isEmit)
+            {
+                // Color of particle
+                emitParams.startColor = GetZoomPercentageColor(hazeParticleDataList[i].color);
+                
+                // Size
+                main.startSizeX = hazeParticleDataList[i].size;
+                main.startSizeY = hazeParticleDataList[i].size;
 
-            // Size
-            main.startSizeX = hazeParticleDataList[i].size;
-            main.startSizeY = hazeParticleDataList[i].size;
+                // Rotation
+                emitParams.rotation3D = hazeParticleDataList[i].rotation;
 
-            // Rotation
-            emitParams.rotation3D = hazeParticleDataList[i].rotation;
+                // Position
+                emitParams.position = hazeParticleDataList[i].position;
 
-            // Position
-            emitParams.position = hazeParticleDataList[i].position;
-
-            // Emit Particle
-            hazeParticleSystem.Emit(emitParams, 1);
+                // Emit Particle
+                hazeParticleSystem.Emit(emitParams, 1);
+            }
         }
     }
     private void UpdateHazeParticles()
@@ -211,7 +289,7 @@ public class GalaxyVFXController : MonoBehaviour
         // Position
         emitParams.position = new Vector3(0, 0, ambientParticleSystem.transform.position.z);
 
-        EmitAmbientParticles();
+        EmitAmbientParticles(); // Particles do not show on first frame of GameState.Play if Emit is not called in Initialize. This only matters when using the console to generate galaxies.
     }
     private void EmitAmbientParticles()
     {
@@ -380,7 +458,9 @@ public class GalaxyVFXController : MonoBehaviour
         }
         else
         {
-            InitializeVFX();
+            EmitHazeParticles();
+            EmitAmbientParticles();
+            coreLight.gameObject.SetActive(true);
         }
     }
 
@@ -433,5 +513,6 @@ public class GalaxyVFXController : MonoBehaviour
         public float size;
         public Vector3 position;
         public Vector3 rotation;
+        public List<HazeParticleData> neighborList;
     }
 }
