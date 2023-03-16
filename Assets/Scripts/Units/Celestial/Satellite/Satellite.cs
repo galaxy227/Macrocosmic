@@ -2,6 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SatelliteType
+{
+    Planet,
+    Moon
+}
+
+public enum SurfaceType
+{
+    Ice,
+    Oceanic,
+    Gaia,
+    Temperate,
+    Desert,
+    Volcanic,
+    Toxic,
+    Barren,
+    GasGiant,
+}
+
 // Celestial orbiting around another Celestial (Planet around Star, Moon around Planet, etc)
 
 public class Satellite : Celestial
@@ -29,23 +48,4 @@ public class Satellite : Celestial
 
         return distance;
     }
-}
-
-public enum SatelliteType
-{
-    Planet,
-    Moon
-}
-
-public enum SurfaceType
-{
-    Ice,
-    Oceanic,
-    Gaia,
-    Temperate,
-    Desert,
-    Volcanic,
-    Toxic,
-    Barren,
-    GasGiant,
 }
