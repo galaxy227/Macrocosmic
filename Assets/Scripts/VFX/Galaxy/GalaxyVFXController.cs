@@ -176,7 +176,6 @@ public class GalaxyVFXController : MonoBehaviour
             if (Vector3.Distance(particleData.position, Vector3.zero) > distanceThreshold) 
             {
                 particleData.isEmit = true;
-                Debug.Log("Force Emit");
             }
             else
             {
