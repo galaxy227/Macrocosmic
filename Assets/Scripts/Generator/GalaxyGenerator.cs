@@ -274,35 +274,31 @@ public class GalaxyGenerator : MonoBehaviour
     }
     private void SetSize()
     {
-        Systems = GetSystemsFromSizeType();
         Radius = Systems / 2;
-    }
-    private int GetSystemsFromSizeType()
-    {
-        int value = 0;
 
-        if (sizeType == SizeType.Tiny)
+        switch (sizeType)
         {
-            value = 200;
+            case SizeType.Tiny:
+                Systems = 200;
+                Radius = 100;
+                break;
+            case SizeType.Small:
+                Systems = 400;
+                Radius = 200;
+                break;
+            case SizeType.Medium:
+                Systems = 600;
+                Radius = 300;
+                break;
+            case SizeType.Large:
+                Systems = 800;
+                Radius = 400;
+                break;
+            case SizeType.Huge:
+                Systems = 1000;
+                Radius = 500;
+                break;
         }
-        else if (sizeType == SizeType.Small)
-        {
-            value = 400;
-        }
-        else if (sizeType == SizeType.Medium)
-        {
-            value = 600;
-        }
-        else if (sizeType == SizeType.Large)
-        {
-            value = 800;
-        }
-        else if (sizeType == SizeType.Huge)
-        {
-            value = 1000;
-        }
-
-        return value;
     }
     private void SetColorType()
     {

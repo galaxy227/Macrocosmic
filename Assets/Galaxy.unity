@@ -10166,6 +10166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hazeParticleSystem: {fileID: 1579783754}
+  hazeTexture: {fileID: 2800000, guid: 1ca639d4d51309246b8815f514a320b5, type: 3}
   ambientParticleSystem: {fileID: 48904994}
   coreLight: {fileID: 630448848}
   IsUpdateAlpha: 1
@@ -54258,9 +54259,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 79.46118, y: 644.07275}
+  m_AnchoredPosition: {x: 83.52002, y: 628.36365}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.54138607, y: 1.0963637}
+  m_Pivot: {x: 0.54350007, y: 1.0818182}
 --- !u!1 &140525682023364179
 GameObject:
   m_ObjectHideFlags: 0
