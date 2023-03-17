@@ -36,8 +36,8 @@ public class UICentralBody : UIUnit
     }
     private string SetSizeTypeText(CentralBody centralBody)
     {
-        int value = (int)centralBody.size.sizeType;
-        string result = System.Enum.GetName(typeof(Celestial.Size.SizeType), value);
+        int value = (int)centralBody.sizeType;
+        string result = System.Enum.GetName(typeof(Celestial.SizeType), value);
 
         return result;
     }

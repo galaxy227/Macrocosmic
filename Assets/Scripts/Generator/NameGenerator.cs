@@ -83,7 +83,7 @@ public static class NameGenerator
     }
     private static bool IsGalaxyNameExistInSave(string galaxyName)
     {
-        List<string> saveFolderPathList = FileHelper.GetListOfFolderPaths(FileGalaxy.MotherSaveFolderPath, false);
+        List<string> saveFolderPathList = FileManager.GetListOfFolderPaths(FileManager.SavesFolderPath, false);
 
         foreach (string saveFolderPath in saveFolderPathList)
         {

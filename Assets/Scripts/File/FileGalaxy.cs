@@ -17,37 +17,10 @@ public class FileGalaxy
     {
         get
         {
-            return MotherSaveFolderPath + CurrentSaveFolderName;
+            return FileManager.SavesFolderPath + "/" + CurrentSaveFolderName;
         }
     }
-    public static string CurrentSaveFolderName
-    {
-        get
-        {
-            return currentSaveFolderName;
-        }
-        set
-        {
-            currentSaveFolderName = value;
-        }
-    }
-    private static string currentSaveFolderName;
-    public static string MotherSaveFolderPath
-    {
-        get
-        {
-            return Application.persistentDataPath + "/" + MotherSaveFolderName;
-        }
-    }
-    public static string MotherSaveFolderName
-    {
-        get 
-        {
-            ValidateMotherSaveFolder();
-            return motherSaveFolderName; 
-        }
-    }
-    private const string motherSaveFolderName = "Saves/";
+    public static string CurrentSaveFolderName;
 
     // SAVE FILE
     public string FileName;
@@ -113,7 +86,7 @@ public class FileGalaxy
     // Load
     public void LoadGalaxy(string folderName)
     {
-        ValidateMotherSaveFolder();
+        //ValidateParentSaveFolder();
 
         // Deserialize
         if (GameController.Instance.VersionObj.IsVersionCompatible(VersionData)) // if file version is compatible with LastCompatibleVersion
@@ -201,11 +174,11 @@ public class FileGalaxy
         }
 
         FileGalaxy fileGalaxy = new FileGalaxy(fileName + fileExtension);
-        FileHandler.SaveToJSON<FileGalaxy>(fileGalaxy, MotherSaveFolderName + CurrentSaveFolderName, fileGalaxy.FileName);
+        FileHandler.SaveToJSON<FileGalaxy>(fileGalaxy, FileManager.SavesFolderPath + "/" + CurrentSaveFolderName, fileGalaxy.FileName);
     }
     private static bool IsSaveFolderNameDuplicate(string folderName)
     {
-        List<string> folderNameList = FileHelper.GetListOfFolderPaths(MotherSaveFolderPath, false);
+        List<string> folderNameList = FileManager.GetListOfFolderPaths(FileManager.SavesFolderPath, false);
 
         for (int i = 0; i < folderNameList.Count; i++)
         {
@@ -237,16 +210,6 @@ public class FileGalaxy
     // Read
     public static FileGalaxy ReadGalaxy(string folderName, string fileName)
     {
-        return FileHandler.ReadFromJSON<FileGalaxy>(MotherSaveFolderName + folderName, fileName);
-    }
-
-    // Utility
-    public static void ValidateMotherSaveFolder()
-    {
-        // Create SaveFolder
-        if (!Directory.Exists(Application.persistentDataPath + "/" + motherSaveFolderName))
-        {
-            Directory.CreateDirectory(Application.persistentDataPath + "/" + motherSaveFolderName);
-        }
+        return FileHandler.ReadFromJSON<FileGalaxy>(FileManager.SavesFolderPath + "/" + folderName, fileName);
     }
 }

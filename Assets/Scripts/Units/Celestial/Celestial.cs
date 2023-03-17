@@ -6,8 +6,17 @@ using UnityEngine;
 
 public class Celestial : Unit
 {
+    public enum SizeType
+    {
+        Tiny,
+        Small,
+        Medium,
+        Large,
+        Huge
+    }
+
     public SolarSystem solarSystem;
-    public Size size;
+    public SizeType sizeType;
 
     private void Start()
     {
@@ -17,19 +26,5 @@ public class Celestial : Unit
     protected override void OnStart()
     {
         base.OnStart();
-    }
-
-    public struct Size // use Struct because Enum cannot be inherited 
-    {
-        public enum SizeType
-        {
-            Tiny,
-            Small,
-            Medium,
-            Large,
-            Huge
-        }
-
-        public SizeType sizeType;
     }
 }

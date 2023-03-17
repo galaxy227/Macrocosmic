@@ -6,15 +6,21 @@ using UnityEngine;
 
 public class SatelliteController : MonoBehaviour
 {
-    public static float OrbitSpeed
-    {
-        get { return orbitSpeed; }
-    }
-    private static float orbitSpeed = 1f;
+    private const float orbitSpeed = 1f;
 
-    void Start()
+    public static SatelliteController Instance;
+    private static SatelliteController instance;
+
+    private void Awake()
     {
-        OnStart();
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     void Update()
     {
@@ -34,7 +40,7 @@ public class SatelliteController : MonoBehaviour
     public static void OrbitSatellite(Satellite satellite)
     {
         PolarCoord polarCoord = Tools.ConvertCartesianToPolar(satellite.transform.position.x, satellite.transform.position.y);
-        float angleOffset = (1 / satellite.SpawnDistance) * OrbitSpeed * TimeController.Instance.customDeltaTime;
+        float angleOffset = (1 / satellite.SpawnDistance) * orbitSpeed * TimeController.Instance.customDeltaTime;
 
         if (satellite.solarSystem.orbitDirection == Vector3.back)
         {
@@ -48,12 +54,6 @@ public class SatelliteController : MonoBehaviour
         {
             satellite.transform.position = new Vector3(cartesianCoord.x, cartesianCoord.y, satellite.transform.position.z);
         }
-    }
-
-    // Utility
-    private void OnStart()
-    {
-
     }
 }
 

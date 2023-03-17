@@ -701,23 +701,23 @@ public class SystemGenerator : MonoBehaviour
         // SizeType
         if (planetScaleSeed == 0) // Tiny
         {
-            satellite.size.sizeType = Celestial.Size.SizeType.Tiny;
+            satellite.sizeType = Celestial.SizeType.Tiny;
         }
         else if (planetScaleSeed == 1) // Small
         {
-            satellite.size.sizeType = Celestial.Size.SizeType.Small;
+            satellite.sizeType = Celestial.SizeType.Small;
         }
         else if (planetScaleSeed == 2) // Medium
         {
-            satellite.size.sizeType = Celestial.Size.SizeType.Medium;
+            satellite.sizeType = Celestial.SizeType.Medium;
         }
         else if (planetScaleSeed == 3) // Large
         {
-            satellite.size.sizeType = Celestial.Size.SizeType.Large;
+            satellite.sizeType = Celestial.SizeType.Large;
         }
         else if (planetScaleSeed == 4) // Huge
         {
-            satellite.size.sizeType = Celestial.Size.SizeType.Huge;
+            satellite.sizeType = Celestial.SizeType.Huge;
         }
 
         return satellite;

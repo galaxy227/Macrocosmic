@@ -7,25 +7,31 @@ using System;
 
 public static class FileHandler
 {
-    public static void SaveListToJSON<T>(List<T> toSave, string folderName, string fileName)
+    public static void SaveListToJSON<T>(List<T> toSave, string path, string fileName)
     {
-        Debug.Log(GetPath(folderName, fileName));
+        path = FileManager.ValidatePath(path);
 
         string content = JsonHelper.ToJson<T>(toSave.ToArray());
-        WriteFile(GetPath(folderName, fileName), content);
+        WriteFile(path + fileName, content);
+
+        Debug.Log(path + fileName);
     }
 
-    public static void SaveToJSON<T>(T toSave, string folderName, string fileName)
+    public static void SaveToJSON<T>(T toSave, string path, string fileName)
     {
-        Debug.Log(GetPath(folderName, fileName));
+        path = FileManager.ValidatePath(path);
 
         string content = JsonUtility.ToJson(toSave);
-        WriteFile(GetPath(folderName, fileName), content);
+        WriteFile(path + fileName, content);
+
+        Debug.Log(path + fileName);
     }
 
-    public static List<T> ReadListFromJSON<T>(string folderName, string fileName)
+    public static List<T> ReadListFromJSON<T>(string path, string fileName)
     {
-        string content = ReadFile(GetPath(folderName, fileName));
+        path = FileManager.ValidatePath(path);
+
+        string content = ReadFile(path + fileName);
 
         if (string.IsNullOrEmpty(content) || content == "()")
         {
@@ -39,9 +45,11 @@ public static class FileHandler
         }
     }
 
-    public static T ReadFromJSON<T>(string folderName, string fileName)
+    public static T ReadFromJSON<T>(string path, string fileName)
     {
-        string content = ReadFile(GetPath(folderName, fileName));
+        path = FileManager.ValidatePath(path);
+
+        string content = ReadFile(path + fileName);
 
         if (string.IsNullOrEmpty(content) || content == "()")
         {
@@ -53,20 +61,6 @@ public static class FileHandler
 
             return result;
         }
-    }
-
-    private static string GetPath(string folderName, string fileName)
-    {
-        if (string.IsNullOrEmpty(folderName))
-        {
-            folderName = "/";
-        }
-        else
-        {
-            folderName = "/" + folderName + "/";
-        }
-
-        return Application.persistentDataPath + folderName + fileName;
     }
 
     private static void WriteFile(string path, string content)
@@ -126,8 +120,38 @@ public static class JsonHelper
 }
 
 // My class
-public static class FileHelper
+public static class FileManager
 {
+    public static string SavesFolderPath
+    {
+        get
+        {
+            ValidateFolder(Application.persistentDataPath, savesFolderName);
+            return Application.persistentDataPath + "/" + savesFolderName;
+        }
+    }
+    private static string savesFolderName = "Saves";
+
+    public static void ValidateFolder(string path, string folderName)
+    {
+        path = ValidatePath(path);
+
+        if (!Directory.Exists(path + folderName))
+        {
+            Directory.CreateDirectory(path + folderName);
+        }
+    }
+    public static string ValidatePath(string path)
+    {
+        if (path[path.Length - 1] != '/' || path[path.Length - 1] != '\\')
+        {
+            path += "/";
+        }
+
+        return path;
+    }
+
+    // Tools
     public static List<string> GetAllJsonFileNames(string path)
     {
         string[] filePaths = Directory.GetFiles(path, "*.json");
@@ -144,21 +168,21 @@ public static class FileHelper
     public static List<string> GetListOfFolderPaths(string path, bool removeEmptyFolders)
     {
         // Get List of folders in Directory
-        string[] saveFolderPathArray = Directory.GetDirectories(path);
-        List<string> saveFolderPathList = saveFolderPathArray.ToList();
+        string[] folderPathArray = Directory.GetDirectories(path);
+        List<string> folderPathList = folderPathArray.ToList();
 
+        // Remove empty folders from SaveFolderPathList
         if (removeEmptyFolders)
         {
-            // Remove empty folders from SaveFolderPathList
-            for (int i = saveFolderPathList.Count - 1; i >= 0; i--)
+            for (int i = folderPathList.Count - 1; i >= 0; i--)
             {
-                if (Directory.GetFiles(saveFolderPathList[i]).Length <= 0)
+                if (Directory.GetFiles(folderPathList[i]).Length <= 0)
                 {
-                    saveFolderPathList.Remove(saveFolderPathList[i]);
+                    folderPathList.Remove(folderPathList[i]);
                 }
             }
         }
 
-        return saveFolderPathList;
+        return folderPathList;
     }
 }

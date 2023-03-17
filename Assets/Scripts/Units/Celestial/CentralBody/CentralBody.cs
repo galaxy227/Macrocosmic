@@ -17,23 +17,23 @@ public class CentralBody : Celestial
     {
         if (solarSystem.radiusType == SolarSystem.RadiusType.Tiny)
         {
-            size.sizeType = Size.SizeType.Tiny;
+            sizeType = SizeType.Tiny;
         }
         else if (solarSystem.radiusType == SolarSystem.RadiusType.Small)
         {
-            size.sizeType = Size.SizeType.Small;
+            sizeType = SizeType.Small;
         }
         else if (solarSystem.radiusType == SolarSystem.RadiusType.Medium)
         {
-            size.sizeType = Size.SizeType.Medium;
+            sizeType = SizeType.Medium;
         }
         else if (solarSystem.radiusType == SolarSystem.RadiusType.Large)
         {
-            size.sizeType = Size.SizeType.Large;
+            sizeType = SizeType.Large;
         }
         else if (solarSystem.radiusType == SolarSystem.RadiusType.Huge)
         {
-            size.sizeType = Size.SizeType.Huge;
+            sizeType = SizeType.Huge;
         }
     }
 }

@@ -152,7 +152,7 @@ public class MenuLoad : MonoBehaviour
         SaveFolderList.Clear();
 
         // Get List of folders in Directory
-        List<string> saveFolderPathList = FileHelper.GetListOfFolderPaths(FileGalaxy.MotherSaveFolderPath, true);
+        List<string> saveFolderPathList = FileManager.GetListOfFolderPaths(FileManager.SavesFolderPath, true);
 
         // Instantiate SaveFolderPrefab UI
         for (int i = 0; i < saveFolderPathList.Count; i++)
@@ -343,7 +343,7 @@ public class MenuLoad : MonoBehaviour
     {
         public FileSystemWatcher Watcher;
         public bool IsChanged;
-        private string path = FileGalaxy.MotherSaveFolderPath;
+        private string path = FileManager.SavesFolderPath;
 
         public MenuLoadFileWatcher()
         {
