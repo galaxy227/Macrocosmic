@@ -122,6 +122,16 @@ public static class JsonHelper
 // My class
 public static class FileManager
 {
+    public static string PlanetsFolderPath
+    {
+        get
+        {
+            ValidateFolder(Application.persistentDataPath, planetsFolderName);
+            return Application.persistentDataPath + "/" + planetsFolderName;
+        }
+    }
+    private static string planetsFolderName = "Planets";
+
     public static string SavesFolderPath
     {
         get
