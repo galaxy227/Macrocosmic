@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class TaskBarData : MonoBehaviour
+public class TaskBarSummary : MonoBehaviour
 {
     // Info
     public TextMeshProUGUI NameText;
@@ -13,7 +13,7 @@ public class TaskBarData : MonoBehaviour
     public TextMeshProUGUI ShapeText;
     // Stars
     public TextMeshProUGUI StarsText;
-    public TextMeshProUGUI RedStarText; 
+    public TextMeshProUGUI RedStarText;
     public TextMeshProUGUI OrangeStarText;
     public TextMeshProUGUI YellowStarText;
     public TextMeshProUGUI WhiteStarText;
@@ -21,7 +21,7 @@ public class TaskBarData : MonoBehaviour
     public TextMeshProUGUI BlackHoleText;
     // Planets
     public TextMeshProUGUI PlanetsText;
-    public TextMeshProUGUI IceText; 
+    public TextMeshProUGUI IceText;
     public TextMeshProUGUI OceanicText;
     public TextMeshProUGUI GaiaText;
     public TextMeshProUGUI TemperateText;
