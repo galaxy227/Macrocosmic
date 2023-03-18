@@ -334,7 +334,7 @@ public class GalaxyVFXController : MonoBehaviour
             // Emit Core
             ambientParticleSystem.Emit(emitParams, 1);
 
-            if (GalaxyGenerator.Instance.shapeType != GalaxyGenerator.ShapeType.Spiral || GalaxyGenerator.Instance.sizeType != GalaxyGenerator.SizeType.Tiny)
+            if (GalaxyGenerator.Instance.shapeType != GalaxyGenerator.ShapeType.Spiral || GalaxyGenerator.Instance.sizeType != SizeType.Tiny)
             {
                 // Size Mid
                 sizeValue = 100 * ((int)GalaxyGenerator.Instance.sizeType + 1);

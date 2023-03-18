@@ -4,6 +4,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+public enum SizeType
+{
+    Tiny,
+    Small,
+    Medium,
+    Large,
+    Huge
+}
+
 // Generations system coordinates, instantiates systems
 
 public class GalaxyGenerator : MonoBehaviour
@@ -19,15 +28,6 @@ public class GalaxyGenerator : MonoBehaviour
         Spiral,
         Ellipitical,
         Ring,
-    }
-
-    public enum SizeType
-    {
-        Tiny,
-        Small,
-        Medium,
-        Large,
-        Huge
     }
 
     public enum ColorType

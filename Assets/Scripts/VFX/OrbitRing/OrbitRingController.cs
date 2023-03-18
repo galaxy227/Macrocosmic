@@ -36,7 +36,7 @@ public class OrbitRingController : MonoBehaviour
         if (ViewController.ViewType == ViewType.System)
         {
             float minWidth = 0.000001f;
-            float maxWidth = 0.25f * (InputManager.SelectedSolarSystem.radius / (int)SolarSystem.RadiusType.Tiny);
+            float maxWidth = 0.25f * (InputManager.SelectedSolarSystem.radius / SolarSystem.GetRadiusFromSizeType(SizeType.Tiny));
 
             float thresholdToDisappear = 25f; // Orbit rings should disappear at this position (Z)
             float thresholdPercentage = Mathf.InverseLerp(PlayerCamera.Instance.MinZoom, PlayerCamera.Instance.MaxZoom, thresholdToDisappear);

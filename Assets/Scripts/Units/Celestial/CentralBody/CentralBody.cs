@@ -15,25 +15,25 @@ public class CentralBody : Celestial
     }
     private void SetSizeType()
     {
-        if (solarSystem.radiusType == SolarSystem.RadiusType.Tiny)
+        if (solarSystem.SizeType == SizeType.Tiny)
         {
-            sizeType = SizeType.Tiny;
+            SizeType = SizeType.Tiny;
         }
-        else if (solarSystem.radiusType == SolarSystem.RadiusType.Small)
+        else if (solarSystem.SizeType == SizeType.Small)
         {
-            sizeType = SizeType.Small;
+            SizeType = SizeType.Small;
         }
-        else if (solarSystem.radiusType == SolarSystem.RadiusType.Medium)
+        else if (solarSystem.SizeType == SizeType.Medium)
         {
-            sizeType = SizeType.Medium;
+            SizeType = SizeType.Medium;
         }
-        else if (solarSystem.radiusType == SolarSystem.RadiusType.Large)
+        else if (solarSystem.SizeType == SizeType.Large)
         {
-            sizeType = SizeType.Large;
+            SizeType = SizeType.Large;
         }
-        else if (solarSystem.radiusType == SolarSystem.RadiusType.Huge)
+        else if (solarSystem.SizeType == SizeType.Huge)
         {
-            sizeType = SizeType.Huge;
+            SizeType = SizeType.Huge;
         }
     }
 }

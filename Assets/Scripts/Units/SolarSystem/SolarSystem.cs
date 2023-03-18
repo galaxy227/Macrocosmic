@@ -12,16 +12,7 @@ public class SolarSystem : Unit
     public CentralBody centralBody;
     public List<Satellite> satelliteList = new List<Satellite>();
 
-    public enum RadiusType
-    {
-        Tiny = 150,
-        Small = 300,
-        Medium = 450,
-        Large = 600,
-        Huge = 750
-    }
-
-    public RadiusType radiusType;
+    public SizeType SizeType;
     public Vector3 orbitDirection;
     public int radius; // physical radius of system, determined by size
 
@@ -42,5 +33,23 @@ public class SolarSystem : Unit
     protected override void OnStart()
     {
         base.OnStart();
+    }
+    public static int GetRadiusFromSizeType(SizeType sizeType)
+    {
+        switch (sizeType)
+        {
+            case SizeType.Tiny:
+                return 100;
+            case SizeType.Small:
+                return 200;
+            case SizeType.Medium:
+                return 300;
+            case SizeType.Large:
+                return 400;
+            case SizeType.Huge:
+                return 500;
+            default: 
+                return 0;
+        }
     }
 }

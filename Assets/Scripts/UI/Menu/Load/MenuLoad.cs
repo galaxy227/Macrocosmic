@@ -178,7 +178,7 @@ public class MenuLoad : MonoBehaviour
 
             // Set Text
             saveFolderPrefab.NameText.text = Path.GetFileName(saveFolderPathList[i]);
-            saveFolderPrefab.DescriptionText.text = ((GalaxyGenerator.SizeType)fileGalaxy.SettingValues[0]).ToString() + " " + ((GalaxyGenerator.ShapeType)fileGalaxy.SettingValues[1]).ToString() + " Galaxy";
+            saveFolderPrefab.DescriptionText.text = ((SizeType)fileGalaxy.SettingValues[0]).ToString() + " " + ((GalaxyGenerator.ShapeType)fileGalaxy.SettingValues[1]).ToString() + " Galaxy";
 
             // Set Path
             saveFolderPrefab.saveFolderPath = saveFolderPathList[i];

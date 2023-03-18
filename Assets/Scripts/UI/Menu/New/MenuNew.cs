@@ -49,23 +49,23 @@ public class MenuNew : MonoBehaviour
     {
         if (value == 0)
         {
-            GalaxyGenerator.Instance.sizeType = GalaxyGenerator.SizeType.Tiny;
+            GalaxyGenerator.Instance.sizeType = SizeType.Tiny;
         }
         else if (value == 1)
         {
-            GalaxyGenerator.Instance.sizeType = GalaxyGenerator.SizeType.Small;
+            GalaxyGenerator.Instance.sizeType = SizeType.Small;
         }
         else if (value == 2)
         {
-            GalaxyGenerator.Instance.sizeType = GalaxyGenerator.SizeType.Medium;
+            GalaxyGenerator.Instance.sizeType = SizeType.Medium;
         }
         else if (value == 3)
         {
-            GalaxyGenerator.Instance.sizeType = GalaxyGenerator.SizeType.Large;
+            GalaxyGenerator.Instance.sizeType = SizeType.Large;
         }
         else if (value == 4)
         {
-            GalaxyGenerator.Instance.sizeType = GalaxyGenerator.SizeType.Huge;
+            GalaxyGenerator.Instance.sizeType = SizeType.Huge;
         }
 
         UpdateDropDownNumArmsOnChangeSizeType(value);
@@ -209,29 +209,29 @@ public class MenuNew : MonoBehaviour
 
         List<string> optionList = new List<string>();
 
-        if (value == (int)GalaxyGenerator.SizeType.Tiny)
+        if (value == (int)SizeType.Tiny)
         {
             optionList.Add("2 Arms");
         }
-        else if (value == (int)GalaxyGenerator.SizeType.Small)
+        else if (value == (int)SizeType.Small)
         {
             optionList.Add("2 Arms");
             optionList.Add("3 Arms");
         }
-        else if (value == (int)GalaxyGenerator.SizeType.Medium)
+        else if (value == (int)SizeType.Medium)
         {
             optionList.Add("2 Arms");
             optionList.Add("3 Arms");
             optionList.Add("4 Arms");
         }
-        else if (value == (int)GalaxyGenerator.SizeType.Large)
+        else if (value == (int)SizeType.Large)
         {
             optionList.Add("2 Arms");
             optionList.Add("3 Arms");
             optionList.Add("4 Arms");
             optionList.Add("5 Arms");
         }
-        else if (value == (int)GalaxyGenerator.SizeType.Huge)
+        else if (value == (int)SizeType.Huge)
         {
             optionList.Add("2 Arms");
             optionList.Add("3 Arms");

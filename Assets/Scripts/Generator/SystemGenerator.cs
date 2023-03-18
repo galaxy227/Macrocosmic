@@ -103,28 +103,28 @@ public class SystemGenerator : MonoBehaviour
         // Set RadiusType & Radius value
         if (radiusSeed == 0)
         {
-            system.radiusType = SolarSystem.RadiusType.Tiny;
-            system.radius = (int)system.radiusType;
+            system.SizeType = SizeType.Tiny;
+            system.radius = SolarSystem.GetRadiusFromSizeType(SizeType.Tiny);
         }
         else if (radiusSeed == 1)
         {
-            system.radiusType = SolarSystem.RadiusType.Small;
-            system.radius = (int)system.radiusType;
+            system.SizeType = SizeType.Small;
+            system.radius = SolarSystem.GetRadiusFromSizeType(SizeType.Small);
         }
         else if (radiusSeed == 2)
         {
-            system.radiusType = SolarSystem.RadiusType.Medium;
-            system.radius = (int)system.radiusType;
+            system.SizeType = SizeType.Medium;
+            system.radius = SolarSystem.GetRadiusFromSizeType(SizeType.Medium);
         }
         else if (radiusSeed == 3)
         {
-            system.radiusType = SolarSystem.RadiusType.Large;
-            system.radius = (int)system.radiusType;
+            system.SizeType = SizeType.Large;
+            system.radius = SolarSystem.GetRadiusFromSizeType(SizeType.Large);
         }
         else if (radiusSeed == 4)
         {
-            system.radiusType = SolarSystem.RadiusType.Huge;
-            system.radius = (int)system.radiusType;
+            system.SizeType = SizeType.Huge;
+            system.radius = SolarSystem.GetRadiusFromSizeType(SizeType.Huge);
         }
     }
     private void SetOrbitDirection(SolarSystem system, System.Random rand)
@@ -298,23 +298,23 @@ public class SystemGenerator : MonoBehaviour
         // Set maxPlanetAmount 
         int baseValue = 3; // each maxPlanetAmount must be multiple of baseValue
 
-        if (system.radiusType == SolarSystem.RadiusType.Tiny)
+        if (system.SizeType == SizeType.Tiny)
         {
             maxPlanetAmount = baseValue;
         }
-        else if (system.radiusType == SolarSystem.RadiusType.Small)
+        else if (system.SizeType == SizeType.Small)
         {
             maxPlanetAmount = baseValue * 2;
         }
-        else if (system.radiusType == SolarSystem.RadiusType.Medium)
+        else if (system.SizeType == SizeType.Medium)
         {
             maxPlanetAmount = baseValue * 3;
         }
-        else if (system.radiusType == SolarSystem.RadiusType.Large)
+        else if (system.SizeType == SizeType.Large)
         {
             maxPlanetAmount = baseValue * 4;
         }
-        else if (system.radiusType == SolarSystem.RadiusType.Huge)
+        else if (system.SizeType == SizeType.Huge)
         {
             maxPlanetAmount = baseValue * 5;
         }
@@ -701,23 +701,23 @@ public class SystemGenerator : MonoBehaviour
         // SizeType
         if (planetScaleSeed == 0) // Tiny
         {
-            satellite.sizeType = Celestial.SizeType.Tiny;
+            satellite.SizeType = SizeType.Tiny;
         }
         else if (planetScaleSeed == 1) // Small
         {
-            satellite.sizeType = Celestial.SizeType.Small;
+            satellite.SizeType = SizeType.Small;
         }
         else if (planetScaleSeed == 2) // Medium
         {
-            satellite.sizeType = Celestial.SizeType.Medium;
+            satellite.SizeType = SizeType.Medium;
         }
         else if (planetScaleSeed == 3) // Large
         {
-            satellite.sizeType = Celestial.SizeType.Large;
+            satellite.SizeType = SizeType.Large;
         }
         else if (planetScaleSeed == 4) // Huge
         {
-            satellite.sizeType = Celestial.SizeType.Huge;
+            satellite.SizeType = SizeType.Huge;
         }
 
         return satellite;

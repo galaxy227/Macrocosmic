@@ -40,8 +40,8 @@ public class UISatellite : UIUnit
     }
     private string SetSizeTypeText(Satellite satellite)
     {
-        int value = (int)satellite.sizeType;
-        string result = System.Enum.GetName(typeof(Celestial.SizeType), value);
+        int value = (int)satellite.SizeType;
+        string result = System.Enum.GetName(typeof(SizeType), value);
 
         return result;
     }

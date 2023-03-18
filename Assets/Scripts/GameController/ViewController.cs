@@ -214,7 +214,7 @@ public class ViewController : MonoBehaviour
     private void SetSubViewBarriers()
     {
         lowBarrierGalaxy = GalaxyGenerator.Instance.Radius * 0.5f;
-        lowBarrierSystem = (int)SolarSystem.RadiusType.Tiny;
+        lowBarrierSystem = SolarSystem.GetRadiusFromSizeType(SizeType.Tiny);
     }
 }
 

@@ -212,19 +212,19 @@ public static class ColorHelper
         // Galaxy Size
         switch (GalaxyGenerator.Instance.sizeType)
         {
-            case GalaxyGenerator.SizeType.Tiny:
+            case SizeType.Tiny:
                 alpha = 0.09f * multiplier;
                 break;
-            case GalaxyGenerator.SizeType.Small:
+            case SizeType.Small:
                 alpha = 0.08f * multiplier;
                 break;
-            case GalaxyGenerator.SizeType.Medium:
+            case SizeType.Medium:
                 alpha = 0.07f * multiplier;
                 break;
-            case GalaxyGenerator.SizeType.Large:
+            case SizeType.Large:
                 alpha = 0.06f * multiplier;
                 break;
-            case GalaxyGenerator.SizeType.Huge:
+            case SizeType.Huge:
                 alpha = 0.05f * multiplier;
                 break;
             default:

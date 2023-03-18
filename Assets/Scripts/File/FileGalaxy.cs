@@ -103,7 +103,7 @@ public class FileGalaxy
 
             GalaxyGenerator.Instance.Name = Name;
 
-            GalaxyGenerator.Instance.sizeType = (GalaxyGenerator.SizeType)SettingValues[0];
+            GalaxyGenerator.Instance.sizeType = (SizeType)SettingValues[0];
             GalaxyGenerator.Instance.shapeType = (GalaxyGenerator.ShapeType)SettingValues[1];
             GalaxyGenerator.Instance.NumArms = SettingValues[2];
 

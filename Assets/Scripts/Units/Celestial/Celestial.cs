@@ -6,17 +6,8 @@ using UnityEngine;
 
 public class Celestial : Unit
 {
-    public enum SizeType
-    {
-        Tiny,
-        Small,
-        Medium,
-        Large,
-        Huge
-    }
-
     public SolarSystem solarSystem;
-    public SizeType sizeType;
+    public SizeType SizeType;
 
     private void Start()
     {
