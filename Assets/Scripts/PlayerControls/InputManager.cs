@@ -145,9 +145,9 @@ public class InputManager : MonoBehaviour
             // Create List
             List<Unit> unitList = new List<Unit>();
 
-            unitList.Add(SelectedSolarSystem.centralBody);
+            unitList.Add(SelectedSolarSystem.CentralBody);
 
-            foreach (Satellite satellite in SelectedSolarSystem.satelliteList)
+            foreach (Satellite satellite in SelectedSolarSystem.CentralBody.SatelliteList)
             {
                 unitList.Add(satellite);
             }

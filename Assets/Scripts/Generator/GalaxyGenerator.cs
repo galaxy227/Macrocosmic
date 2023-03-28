@@ -21,7 +21,6 @@ public class GalaxyGenerator : MonoBehaviour
     public SolarSystem systemPrefab;
     // Generated SolarSystem list
     public static List<SolarSystem> SolarSystemList = new List<SolarSystem>();
-    public static List<Satellite> SatelliteList = new List<Satellite>();
 
     public enum ShapeType
     {
@@ -704,7 +703,11 @@ public class GalaxyGenerator : MonoBehaviour
         }
 
         SolarSystemList.Clear();
-        SatelliteList.Clear();
+
+        if (SatelliteController.Instance != null)
+        {
+            SatelliteController.Instance.CentralBodySatelliteList.Clear();
+        }
     }
 }
 

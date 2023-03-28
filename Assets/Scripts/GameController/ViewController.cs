@@ -99,7 +99,7 @@ public class ViewController : MonoBehaviour
             HideGalaxy();
 
             RevealSolarSystem(system);
-            SetCameraBounds(system.radius);
+            SetCameraBounds(system.Radius);
 
             ChangeView.Invoke();
         }
@@ -131,10 +131,10 @@ public class ViewController : MonoBehaviour
         if (system != null)
         {
             // CentralBody
-            ObjectHelper.RevealObjectAndChildren(system.centralBody.gameObject);
+            ObjectHelper.RevealObjectAndChildren(system.CentralBody.gameObject);
 
             // Satellites
-            foreach (Satellite satellite in system.satelliteList)
+            foreach (Satellite satellite in system.CentralBody.SatelliteList)
             {
                 ObjectHelper.RevealObject(satellite.gameObject);
             }
@@ -145,10 +145,10 @@ public class ViewController : MonoBehaviour
         if (system != null)
         {
             // CentralBody
-            ObjectHelper.HideObjectAndChildren(system.centralBody.gameObject);
+            ObjectHelper.HideObjectAndChildren(system.CentralBody.gameObject);
 
             // Satellites
-            foreach (Satellite satellite in system.satelliteList)
+            foreach (Satellite satellite in system.CentralBody.SatelliteList)
             {
                 ObjectHelper.HideObject(satellite.gameObject);
             }

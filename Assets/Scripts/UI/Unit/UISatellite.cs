@@ -83,7 +83,7 @@ public class UISatellite : UIUnit
     }
     private string SetDistanceText(Satellite satellite)
     {
-        float distance = Vector3.Distance(satellite.transform.position, satellite.solarSystem.centralBody.transform.position);
+        float distance = Vector3.Distance(satellite.transform.position, satellite.SolarSystem.CentralBody.transform.position);
         float value = (float)System.Math.Round(distance, 2);
         string result = value.ToString();
 

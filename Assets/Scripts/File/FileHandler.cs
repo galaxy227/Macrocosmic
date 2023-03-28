@@ -142,6 +142,7 @@ public static class FileManager
     }
     private static string savesFolderName = "Saves";
 
+    // Validate
     public static void ValidateFolder(string path, string folderName)
     {
         path = ValidatePath(path);
@@ -159,6 +160,72 @@ public static class FileManager
         }
 
         return path;
+    }
+
+    // Duplicate
+    public static string HandleDuplicateFolderName(string path, string folderName)
+    {
+        if (IsSaveFolderNameDuplicate(path, folderName))
+        {
+            int num = 1;
+
+            do
+            {
+                num++;
+                folderName = folderName + " " + num.ToString();
+
+            } while (IsSaveFolderNameDuplicate(path, folderName));
+        }
+
+        return folderName;
+    }
+    public static bool IsSaveFolderNameDuplicate(string path, string folderName)
+    {
+        List<string> folderNameList = GetListOfFolderPaths(path, false);
+
+        for (int i = 0; i < folderNameList.Count; i++)
+        {
+            if (folderName == Path.GetFileName(folderNameList[i]))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    public static string HandleDuplicateFileName(string path, string fileName)
+    {
+        string name = Path.GetFileNameWithoutExtension(fileName);
+        string extension = Path.GetExtension(fileName);
+
+        if (IsSaveFileNameDuplicate(path, fileName))
+        {
+            int num = 1;
+
+            do
+            {
+                num++;
+                fileName = name + "_" + num.ToString() + extension;
+
+            } while (IsSaveFileNameDuplicate(path, fileName));
+        }
+
+        return fileName;
+    }
+    public static bool IsSaveFileNameDuplicate(string path, string fileName)
+    {
+        // Get List of files in Directory
+        List<string> fileList = Directory.GetFiles(path).ToList();
+
+        for (int i = 0; i < fileList.Count; i++)
+        {
+            if (fileName == Path.GetFileName(fileList[i]))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // Tools

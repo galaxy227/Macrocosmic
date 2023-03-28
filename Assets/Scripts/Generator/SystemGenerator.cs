@@ -63,9 +63,9 @@ public class SystemGenerator : MonoBehaviour
         // Add satellites to GalaxyGenerator.SatelliteList
         foreach (SolarSystem system in GalaxyGenerator.SolarSystemList)
         {
-            foreach (Satellite satellite in system.satelliteList)
+            foreach (Satellite satellite in system.CentralBody.SatelliteList)
             {
-                GalaxyGenerator.SatelliteList.Add(satellite);
+                SatelliteController.Instance.CentralBodySatelliteList.Add(satellite);
             }
         }
     }
@@ -77,7 +77,7 @@ public class SystemGenerator : MonoBehaviour
         GenerateCentralBody(system, rand);
 
         // Generate Satellites
-        if (system.centralBody is Star)
+        if (system.CentralBody is Star)
         {
             GenerateSatellites(system, rand);
         }
@@ -104,27 +104,27 @@ public class SystemGenerator : MonoBehaviour
         if (radiusSeed == 0)
         {
             system.SizeType = SizeType.Tiny;
-            system.radius = SolarSystem.GetRadiusFromSizeType(SizeType.Tiny);
+            system.Radius = SolarSystem.GetRadiusFromSizeType(SizeType.Tiny);
         }
         else if (radiusSeed == 1)
         {
             system.SizeType = SizeType.Small;
-            system.radius = SolarSystem.GetRadiusFromSizeType(SizeType.Small);
+            system.Radius = SolarSystem.GetRadiusFromSizeType(SizeType.Small);
         }
         else if (radiusSeed == 2)
         {
             system.SizeType = SizeType.Medium;
-            system.radius = SolarSystem.GetRadiusFromSizeType(SizeType.Medium);
+            system.Radius = SolarSystem.GetRadiusFromSizeType(SizeType.Medium);
         }
         else if (radiusSeed == 3)
         {
             system.SizeType = SizeType.Large;
-            system.radius = SolarSystem.GetRadiusFromSizeType(SizeType.Large);
+            system.Radius = SolarSystem.GetRadiusFromSizeType(SizeType.Large);
         }
         else if (radiusSeed == 4)
         {
             system.SizeType = SizeType.Huge;
-            system.radius = SolarSystem.GetRadiusFromSizeType(SizeType.Huge);
+            system.Radius = SolarSystem.GetRadiusFromSizeType(SizeType.Huge);
         }
     }
     private void SetOrbitDirection(SolarSystem system, System.Random rand)
@@ -134,11 +134,11 @@ public class SystemGenerator : MonoBehaviour
 
         if (orbitDirectionSeed == 0)
         {
-            system.orbitDirection = Vector3.forward;
+            system.OrbitDirection = Vector3.forward;
         }
         else if (orbitDirectionSeed == 1)
         {
-            system.orbitDirection = Vector3.back;
+            system.OrbitDirection = Vector3.back;
         }
     }
 
@@ -225,17 +225,17 @@ public class SystemGenerator : MonoBehaviour
 
         // Set Parent
         centralBody.transform.SetParent(system.transform, true);
-        system.centralBody = centralBody;
+        system.CentralBody = centralBody;
 
         // Set Position
         centralBody.transform.position = Vector3.zero;
 
         // Scale CentralBody relative to system radius
-        float scale = system.radius / 15;
+        float scale = system.Radius / 15;
         centralBody.transform.localScale = new Vector3(scale, scale, scale);
 
         // Set System
-        centralBody.solarSystem = system;
+        centralBody.SolarSystem = system;
 
         // Set Name
         centralBody.Name = system.Name;
@@ -293,7 +293,7 @@ public class SystemGenerator : MonoBehaviour
         int orbitLayer = 0; // each orbit is a "layer" (keep 1 planet on 1 orbital path)
         List<int> orbitLayerList = new List<int>(); // keep track of which orbitLayers have been taken by a planet, so planets dont have same orbitLayer
         float distanceIncrement = 0; // distance between orbitLayers for Polar Position
-        float centralBodyScale = system.centralBody.transform.localScale.x;
+        float centralBodyScale = system.CentralBody.transform.localScale.x;
 
         // Set maxPlanetAmount 
         int baseValue = 3; // each maxPlanetAmount must be multiple of baseValue
@@ -321,7 +321,7 @@ public class SystemGenerator : MonoBehaviour
 
         // Set planet amount with Random.Next, set distanceIncrement, set orbitLayerList
         planetAmount = rand.Next(0, maxPlanetAmount + 1); // add 1 because the System.Random max is non-inclusive
-        distanceIncrement = (system.radius - centralBodyScale) / maxPlanetAmount;
+        distanceIncrement = (system.Radius - centralBodyScale) / maxPlanetAmount;
         orbitLayerList = SetOrbitLayerList(maxPlanetAmount);
 
         // Generate Planets
@@ -344,9 +344,9 @@ public class SystemGenerator : MonoBehaviour
             // Instantiate, Set PlanetType
             int groupValue = maxPlanetAmount / baseValue; // ie. maxPlanetAmount = 15 / 3 ... groupValue = 5 (includes orbitLayer: 1, 2, 3, 4, 5), groupValue * 2 = 10 (includes orbitLayer: 6, 7, 8, 9, 10), groupValue * 3 = 15 (includes orbitLayer: 11, 12, 13, 14, 15)
 
-            if (system.centralBody is Star)
+            if (system.CentralBody is Star)
             {
-                Star star = (Star)system.centralBody;
+                Star star = (Star)system.CentralBody;
 
                 if (star.starType == Star.StarType.Blue) // HIGHEST TEMPERATURE
                 {
@@ -571,10 +571,13 @@ public class SystemGenerator : MonoBehaviour
 
             // Set Parent, Add to system's satelliteList
             satellite.transform.SetParent(system.transform, true);
-            system.satelliteList.Add(satellite);
+            system.CentralBody.SatelliteList.Add(satellite);
 
             // Set System
-            satellite.solarSystem = system;
+            satellite.SolarSystem = system;
+
+            // Set ParentCelestial
+            satellite.ParentCelestial = system.CentralBody;
 
             // Set Name
             satellite.Name = NameGenerator.GenerateCelestialName(rand);

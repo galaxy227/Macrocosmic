@@ -9,12 +9,11 @@ public class SolarSystem : Unit
     public GameObject glowLight;
     public GameObject circleSprite;
 
-    public CentralBody centralBody;
-    public List<Satellite> satelliteList = new List<Satellite>();
+    public CentralBody CentralBody;
 
     public SizeType SizeType;
-    public Vector3 orbitDirection;
-    public int radius; // physical radius of system, determined by size
+    public Vector3 OrbitDirection;
+    public int Radius; // physical radius of system, determined by size
 
     private void Awake()
     {

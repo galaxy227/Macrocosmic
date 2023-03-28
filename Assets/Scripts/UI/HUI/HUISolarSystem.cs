@@ -100,7 +100,7 @@ public class HUISolarSystem : MonoBehaviour
     private void UpdateText(SolarSystem solarSystem)
     {
         nameText.text = solarSystem.Name;
-        planetAmountText.text = solarSystem.satelliteList.Count.ToString();
+        planetAmountText.text = solarSystem.CentralBody.SatelliteList.Count.ToString();
     }
 
     // Change SubView

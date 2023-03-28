@@ -77,9 +77,9 @@ public class FileGalaxy
         Years = TimeController.Instance.Years;
 
         // Satellite LocalPositions
-        for (int i = 0; i < GalaxyGenerator.SatelliteList.Count; i++)
+        for (int i = 0; i < SatelliteController.Instance.CentralBodySatelliteList.Count; i++)
         {
-            LocalPositions.Add(GalaxyGenerator.SatelliteList[i].transform.localPosition);
+            LocalPositions.Add(SatelliteController.Instance.CentralBodySatelliteList[i].transform.localPosition);
         }
     }
 
@@ -126,7 +126,7 @@ public class FileGalaxy
             // Satellite LocalPositions
             for (int i = 0; i < LocalPositions.Count; i++)
             {
-                GalaxyGenerator.SatelliteList[i].transform.localPosition = LocalPositions[i];
+                SatelliteController.Instance.CentralBodySatelliteList[i].transform.localPosition = LocalPositions[i];
             }
         }
     }
@@ -134,77 +134,25 @@ public class FileGalaxy
     // Save
     public static void SaveGalaxy(string fileName)
     {
+        fileName = fileName + ".json";
+
         // Create new CurrentSaveFolder for saves for this galaxy
-        if (CurrentSaveFolderName == null || !IsSaveFolderNameDuplicate(CurrentSaveFolderName)) // if Galaxy is new OR if Folder does not exist
+        if (CurrentSaveFolderName == null || !FileManager.IsSaveFolderNameDuplicate(FileManager.SavesFolderPath, CurrentSaveFolderName)) // if Galaxy is new OR if Folder does not exist
         {
             CurrentSaveFolderName = GalaxyGenerator.Instance.Name;
 
             // Check if CurrentSaveFolder is duplicate to avoid overwriting pre-existing folders
-            if (IsSaveFolderNameDuplicate(CurrentSaveFolderName))
-            {
-                int num = 1;
-
-                do
-                {
-                    num++;
-
-                } while (IsSaveFolderNameDuplicate(CurrentSaveFolderName + " " + num.ToString()));
-
-                CurrentSaveFolderName = CurrentSaveFolderName + " " + num.ToString();
-            }
+            CurrentSaveFolderName = FileManager.HandleDuplicateFolderName(FileManager.SavesFolderPath, CurrentSaveFolderName);
 
             // Create Folder
             Directory.CreateDirectory(CurrentSaveFolderPath);
         }
 
-        string fileExtension = ".json";
-
         // Check if fileName is duplicate to avoid overwriting pre-existing files
-        if (IsSaveFileNameDuplicate(fileName + fileExtension))
-        {
-            int num = 1;
+        fileName = FileManager.HandleDuplicateFileName(CurrentSaveFolderPath, fileName);
 
-            do
-            {
-                num++;
-
-            } while (IsSaveFileNameDuplicate(fileName + "_" + num.ToString() + fileExtension));
-
-            fileName = fileName + "_" + num.ToString();
-        }
-
-        FileGalaxy fileGalaxy = new FileGalaxy(fileName + fileExtension);
+        FileGalaxy fileGalaxy = new FileGalaxy(fileName);
         FileHandler.SaveToJSON<FileGalaxy>(fileGalaxy, FileManager.SavesFolderPath + "/" + CurrentSaveFolderName, fileGalaxy.FileName);
-    }
-    private static bool IsSaveFolderNameDuplicate(string folderName)
-    {
-        List<string> folderNameList = FileManager.GetListOfFolderPaths(FileManager.SavesFolderPath, false);
-
-        for (int i = 0; i < folderNameList.Count; i++)
-        {
-            if (folderName == Path.GetFileName(folderNameList[i]))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-    private static bool IsSaveFileNameDuplicate(string fileName)
-    {
-        // Get List of files in Directory
-        string[] saveFilePathArray = Directory.GetFiles(CurrentSaveFolderPath);
-        List<string> saveFilePathList = saveFilePathArray.ToList();
-
-        for (int i = 0; i < saveFilePathList.Count; i++)
-        {
-            if (fileName == Path.GetFileName(saveFilePathList[i]))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     // Read

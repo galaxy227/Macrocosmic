@@ -36,7 +36,7 @@ public class OrbitRingController : MonoBehaviour
         if (ViewController.ViewType == ViewType.System)
         {
             float minWidth = 0.000001f;
-            float maxWidth = 0.25f * (InputManager.SelectedSolarSystem.radius / SolarSystem.GetRadiusFromSizeType(SizeType.Tiny));
+            float maxWidth = 0.25f * (InputManager.SelectedSolarSystem.Radius / SolarSystem.GetRadiusFromSizeType(SizeType.Tiny));
 
             float thresholdToDisappear = 25f; // Orbit rings should disappear at this position (Z)
             float thresholdPercentage = Mathf.InverseLerp(PlayerCamera.Instance.MinZoom, PlayerCamera.Instance.MaxZoom, thresholdToDisappear);
@@ -66,12 +66,12 @@ public class OrbitRingController : MonoBehaviour
     }
     private void RevealOrbitRings()
     {
-        for (int i = 0; i < InputManager.SelectedSolarSystem.satelliteList.Count; i++)
+        for (int i = 0; i < InputManager.SelectedSolarSystem.CentralBody.SatelliteList.Count; i++)
         {
             ObjectHelper.RevealObject(orbitRingList[i].gameObject);
 
-            orbitRingList[i].xScale = InputManager.SelectedSolarSystem.satelliteList[i].GetDistance();
-            orbitRingList[i].yScale = InputManager.SelectedSolarSystem.satelliteList[i].GetDistance();
+            orbitRingList[i].xScale = InputManager.SelectedSolarSystem.CentralBody.SatelliteList[i].GetDistance();
+            orbitRingList[i].yScale = InputManager.SelectedSolarSystem.CentralBody.SatelliteList[i].GetDistance();
             orbitRingList[i].CalculateEllipse();
         }
     }

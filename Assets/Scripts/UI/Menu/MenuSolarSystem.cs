@@ -25,7 +25,7 @@ public class MenuSolarSystem : MonoBehaviour
     // MainMenuSolarSystem
     private void UpdateMainMenuSatelliteOrbits()
     {
-        foreach (Satellite satellite in solarSystemInstance.satelliteList)
+        foreach (Satellite satellite in solarSystemInstance.CentralBody.SatelliteList)
         {
             SatelliteController.OrbitSatellite(satellite);
         }
@@ -44,12 +44,12 @@ public class MenuSolarSystem : MonoBehaviour
             // Generate SolarSystem
             SystemGenerator.Instance.GenerateSolarSystem(solarSystemInstance, rand);
 
-            if (solarSystemInstance.satelliteList.Count < minPlanets)
+            if (solarSystemInstance.CentralBody.SatelliteList.Count < minPlanets)
             {
                 Destroy(solarSystemInstance.gameObject);
             }
 
-        } while (solarSystemInstance.satelliteList.Count < minPlanets);
+        } while (solarSystemInstance.CentralBody.SatelliteList.Count < minPlanets);
 
         // Set View
         InputManager.SelectedSolarSystem = solarSystemInstance;

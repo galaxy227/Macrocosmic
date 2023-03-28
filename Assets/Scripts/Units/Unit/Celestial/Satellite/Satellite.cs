@@ -21,12 +21,12 @@ public enum SurfaceType
     GasGiant,
 }
 
-// Celestial orbiting around another Celestial (Planet around Star, Moon around Planet, etc)
-
+// Satellite orbits around ParentCelestial
 public class Satellite : Celestial
 {
     public SatelliteType SatelliteType;
     public SurfaceType SurfaceType;
+    public Celestial ParentCelestial; // Celestial which Satellite orbits around
 
     // Position
     private float spawnDistance; // distance from orbited celestial when instantiated (only accurate at spawn, as exact float value varies once satellite begins orbitting)
@@ -44,7 +44,7 @@ public class Satellite : Celestial
     }
     public float GetDistance()
     {
-        float distance = (solarSystem.centralBody.transform.position - transform.position).magnitude;
+        float distance = (ParentCelestial.transform.position - transform.position).magnitude;
 
         return distance;
     }

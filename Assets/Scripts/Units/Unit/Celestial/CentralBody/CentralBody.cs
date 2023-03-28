@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// The central body of a Solar System, of which all satellites orbit around
-// TYPES: STAR, BLACKHOLE
+// The central body of a Solar System (Star, BlackHole)
 
 public class CentralBody : Celestial
 {
@@ -15,23 +14,23 @@ public class CentralBody : Celestial
     }
     private void SetSizeType()
     {
-        if (solarSystem.SizeType == SizeType.Tiny)
+        if (SolarSystem.SizeType == SizeType.Tiny)
         {
             SizeType = SizeType.Tiny;
         }
-        else if (solarSystem.SizeType == SizeType.Small)
+        else if (SolarSystem.SizeType == SizeType.Small)
         {
             SizeType = SizeType.Small;
         }
-        else if (solarSystem.SizeType == SizeType.Medium)
+        else if (SolarSystem.SizeType == SizeType.Medium)
         {
             SizeType = SizeType.Medium;
         }
-        else if (solarSystem.SizeType == SizeType.Large)
+        else if (SolarSystem.SizeType == SizeType.Large)
         {
             SizeType = SizeType.Large;
         }
-        else if (solarSystem.SizeType == SizeType.Huge)
+        else if (SolarSystem.SizeType == SizeType.Huge)
         {
             SizeType = SizeType.Huge;
         }

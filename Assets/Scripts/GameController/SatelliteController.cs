@@ -6,9 +6,14 @@ using UnityEngine;
 
 public class SatelliteController : MonoBehaviour
 {
+    public List<Satellite> CentralBodySatelliteList = new List<Satellite>(); // Satellites orbiting CentralBody
+
     private const float orbitSpeed = 1f;
 
-    public static SatelliteController Instance;
+    public static SatelliteController Instance
+    {
+        get {  return instance; }
+    }
     private static SatelliteController instance;
 
     private void Awake()
@@ -24,14 +29,14 @@ public class SatelliteController : MonoBehaviour
     }
     void Update()
     {
-        OrbitAllSatellites();
+        OrbitCentralBodySatellites();
     }
 
-    public static void OrbitAllSatellites()
+    public static void OrbitCentralBodySatellites()
     {
         if (TimeController.Instance.SpeedType != SpeedType.Paused)
         {
-            foreach (Satellite satellite in GalaxyGenerator.SatelliteList)
+            foreach (Satellite satellite in Instance.CentralBodySatelliteList)
             {
                 OrbitSatellite(satellite);
             }
@@ -42,7 +47,7 @@ public class SatelliteController : MonoBehaviour
         PolarCoord polarCoord = Tools.ConvertCartesianToPolar(satellite.transform.position.x, satellite.transform.position.y);
         float angleOffset = (1 / satellite.SpawnDistance) * orbitSpeed * TimeController.Instance.customDeltaTime;
 
-        if (satellite.solarSystem.orbitDirection == Vector3.back)
+        if (satellite.SolarSystem.OrbitDirection == Vector3.back)
         {
             angleOffset *= -1f;
         }
@@ -52,7 +57,7 @@ public class SatelliteController : MonoBehaviour
 
         if (!float.IsNaN(cartesianCoord.x) && !float.IsNaN(cartesianCoord.y))
         {
-            satellite.transform.position = new Vector3(cartesianCoord.x, cartesianCoord.y, satellite.transform.position.z);
+            satellite.transform.position = new Vector3(cartesianCoord.x, cartesianCoord.y, satellite.transform.position.z) + satellite.ParentCelestial.transform.position;
         }
     }
 }

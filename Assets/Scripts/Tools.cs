@@ -8,6 +8,39 @@ using UnityEditor;
 
 public static class Tools
 {
+    public static T GetTypeFromWeighted<T>(Dictionary<T, int> dictionary, System.Random rand = null)
+    {
+        // System.Random
+        if (rand == null)
+        {
+            rand = new System.Random();
+        }
+
+        // Sum
+        int sum = 0;
+
+        foreach (KeyValuePair<T, int> entry in dictionary)
+        {
+            sum += entry.Value;
+        }
+
+        // Return Type from seed
+        int seed = rand.Next(0, sum);
+        int value = 0;
+
+        foreach (KeyValuePair<T, int> entry in dictionary)
+        {
+            value += entry.Value;
+
+            if (seed < value)
+            {
+                return entry.Key;
+            }
+        }
+
+        return default(T);
+    } // Key is Type to return, Value is Integer to represent weighted probability
+
     // UI
     public static bool IsMouseOverUI()
     {
