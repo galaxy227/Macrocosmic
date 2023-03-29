@@ -288,6 +288,23 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Events
+    private void OnChangeView()
+    {
+        if (GameController.Instance.GameState == GameState.Play)
+        {
+            if (ViewController.ViewType == ViewType.Galaxy)
+            {
+                ViewPortCanvas.gameObject.SetActive(false);
+                CloseUnitCanvas();
+            }
+            else if (ViewController.ViewType == ViewType.System)
+            {
+                ViewPortCanvas.gameObject.SetActive(true);
+            }
+        }
+    }
+
     // Utility
     private void OnAwake()
     {
@@ -335,9 +352,7 @@ public class UIManager : MonoBehaviour
         GalaxyGenerator.BeforeGenerate.AddListener(DisableAllUnitCanvas);
         GameController.ChangeGameState.AddListener(SetUI); // GameState
         InputManager.ClickUnit.AddListener(OpenUnitCanvas); // Unit
-        ViewController.ChangeView.AddListener(CloseUnitCanvas); // ViewController
-
-        ViewController.ChangeView.AddListener(Viewport.Instance.OnChangeView);
+        ViewController.ChangeView.AddListener(OnChangeView); // ViewController
     }
     private void DisableAllCanvas()
     {

@@ -379,6 +379,8 @@ public class PlayerCamera : MonoBehaviour
         {
             AfterCamera = new UnityEvent();
         }
+
+        SetCameraPosition(new Vector3(0, 0, MaxZoom));
     }
     private void OnStart()
     {

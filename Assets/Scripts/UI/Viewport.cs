@@ -27,17 +27,4 @@ public class Viewport : MonoBehaviour
     {
         ViewController.SetGalaxyView(InputManager.SelectedSolarSystem);
     }
-
-    // Events
-    public void OnChangeView()
-    {
-        if (ViewController.ViewType == ViewType.Galaxy)
-        {
-            gameObject.SetActive(false);
-        }
-        else if (ViewController.ViewType == ViewType.System)
-        {
-            gameObject.SetActive(true);
-        }
-    }
 }

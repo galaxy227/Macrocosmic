@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class MenuSolarSystem : MonoBehaviour
 {
-    public static SolarSystem SolarSystemInstance
-    {
-        get { return solarSystemInstance; }
-    }
-    private static SolarSystem solarSystemInstance;
+    private SolarSystem solarSystem;
 
     void Start()
     {
@@ -16,7 +12,7 @@ public class MenuSolarSystem : MonoBehaviour
     }
     void Update()
     {
-        if (solarSystemInstance != null)
+        if (solarSystem != null)
         {
             UpdateMainMenuSatelliteOrbits();
         }
@@ -25,7 +21,7 @@ public class MenuSolarSystem : MonoBehaviour
     // MainMenuSolarSystem
     private void UpdateMainMenuSatelliteOrbits()
     {
-        foreach (Satellite satellite in solarSystemInstance.CentralBody.SatelliteList)
+        foreach (Satellite satellite in solarSystem.CentralBody.SatelliteList)
         {
             SatelliteController.OrbitSatellite(satellite);
         }
@@ -38,26 +34,25 @@ public class MenuSolarSystem : MonoBehaviour
         do
         {
             // Instantiate SolarSystem
-            solarSystemInstance = Instantiate(GalaxyGenerator.Instance.systemPrefab, Vector3.zero, GalaxyGenerator.Instance.systemPrefab.transform.rotation);
-            solarSystemInstance.transform.SetParent(transform, true);
+            solarSystem = Instantiate(GalaxyGenerator.Instance.systemPrefab, Vector3.zero, GalaxyGenerator.Instance.systemPrefab.transform.rotation);
+            solarSystem.transform.SetParent(transform, true);
 
             // Generate SolarSystem
-            SystemGenerator.Instance.GenerateSolarSystem(solarSystemInstance, rand);
+            SystemGenerator.Instance.GenerateSolarSystem(solarSystem, rand);
 
-            if (solarSystemInstance.CentralBody.SatelliteList.Count < minPlanets)
+            if (solarSystem.CentralBody.SatelliteList.Count < minPlanets)
             {
-                Destroy(solarSystemInstance.gameObject);
+                Destroy(solarSystem.gameObject);
             }
 
-        } while (solarSystemInstance.CentralBody.SatelliteList.Count < minPlanets);
+        } while (solarSystem.CentralBody.SatelliteList.Count < minPlanets);
 
         // Set View
-        InputManager.SelectedSolarSystem = solarSystemInstance;
-        ViewController.SetSystemView(solarSystemInstance);
+        InputManager.SelectedSolarSystem = solarSystem;
+        ViewController.SetSystemView(InputManager.SelectedSolarSystem);
 
         // Set Camera
-        float z = PlayerCamera.Instance.transform.position.z;
-        PlayerCamera.Instance.transform.position = new Vector3(PlayerCamera.Instance.transform.position.x + (z * 0.35f), PlayerCamera.Instance.transform.position.y + (z * 0.025f), z);
+        PlayerCamera.Instance.SetCameraPosition(new Vector3(PlayerCamera.Instance.transform.position.z * 0.35f, PlayerCamera.Instance.transform.position.z * 0.025f, PlayerCamera.Instance.transform.position.z));
     }
 
     private void OnStart()
@@ -68,13 +63,15 @@ public class MenuSolarSystem : MonoBehaviour
     }
     private void OnChangeGameState()
     {
+        Debug.Log("ChangeGameState");
+
         if (GameController.Instance.GameState != GameState.MainMenu)
         {
             // Set View
-            InputManager.SelectedSolarSystem = solarSystemInstance;
-            ViewController.SetGalaxyView(solarSystemInstance);
+            InputManager.SelectedSolarSystem = solarSystem;
+            ViewController.SetGalaxyView(solarSystem);
 
-            Destroy(solarSystemInstance.gameObject);
+            Destroy(solarSystem.gameObject);
         }
     }
 }

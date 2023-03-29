@@ -6991,7 +6991,7 @@ RectTransform:
   m_Children:
   - {fileID: 1759776262}
   m_Father: {fileID: 1384802258}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -13570,7 +13570,7 @@ RectTransform:
   m_Children:
   - {fileID: 983096413}
   m_Father: {fileID: 1384802258}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -17897,6 +17897,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitRingPrefab: {fileID: 5392464414794788505, guid: 29d936ff7e2415b41abda42d0d3f973e, type: 3}
+--- !u!1 &585200793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 585200794}
+  - component: {fileID: 585200795}
+  m_Layer: 0
+  m_Name: MenuSolarSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &585200794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585200793}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.4692955, y: 0.8365917, z: 0.8837099}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1384802258}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &585200795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585200793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0089cabee5bb076408c10a62e8678c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &586175669
 GameObject:
   m_ObjectHideFlags: 0
@@ -18363,7 +18406,6 @@ GameObject:
   m_Component:
   - component: {fileID: 594151958}
   - component: {fileID: 594151960}
-  - component: {fileID: 594151959}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -18379,7 +18421,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 594151957}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -764.80194, y: -444.94876, z: 60.816467}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1323043684}
@@ -18396,18 +18438,6 @@ Transform:
   m_Father: {fileID: 762082386}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &594151959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 594151957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0089cabee5bb076408c10a62e8678c47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &594151960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23321,7 +23351,7 @@ RectTransform:
   - {fileID: 2161367237232317263}
   - {fileID: 208149979}
   m_Father: {fileID: 1384802258}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -34155,6 +34185,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 585200794}
   - {fileID: 852772109}
   - {fileID: 1494753877}
   - {fileID: 398573608}
@@ -36610,8 +36641,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1830954153}
   m_HandleRect: {fileID: 1830954152}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.81333333
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -36687,7 +36718,7 @@ RectTransform:
   m_Children:
   - {fileID: 6633829971140762609}
   m_Father: {fileID: 1384802258}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -44013,7 +44044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d763efc70cbfc4ab1e6b47ae819685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SatelliteList: []
+  CentralBodySatelliteList: []
 --- !u!4 &1648193994
 Transform:
   m_ObjectHideFlags: 0
@@ -46721,7 +46752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00004196167}
+  m_AnchoredPosition: {x: 0, y: -0.0001411438}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1805888893
@@ -47645,7 +47676,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StarPrefab: {fileID: 0}
   BlackHolePrefab: {fileID: 0}
-  SatellitePrefab: {fileID: 0}
+  PlanetPrefab: {fileID: 0}
+  AsteroidPrefab: {fileID: 0}
 --- !u!4 &1836966909
 Transform:
   m_ObjectHideFlags: 0
@@ -51217,7 +51249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1975039756
 Transform:
   m_ObjectHideFlags: 0
@@ -54525,9 +54557,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 117.38379, y: 642.1366}
+  m_AnchoredPosition: {x: 115.4292, y: 655.3766}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.56113744, y: 1.0945709}
+  m_Pivot: {x: 0.5601194, y: 1.1068301}
 --- !u!1 &140525682023364179
 GameObject:
   m_ObjectHideFlags: 0

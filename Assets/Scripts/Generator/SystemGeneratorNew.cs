@@ -290,7 +290,7 @@ public class SystemGeneratorNew : MonoBehaviour
 
         // Set Scale
         int planetScaleSeed = rand.Next(0, 5);
-
+         
         switch (planetScaleSeed)
         {
             case 0:
