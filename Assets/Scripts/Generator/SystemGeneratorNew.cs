@@ -18,7 +18,10 @@ public class SystemGeneratorNew : MonoBehaviour
     private List<FilePlanet> coolPlanetList = new List<FilePlanet>();
     private List<FilePlanet> coldPlanetList = new List<FilePlanet>();
 
-    public static SystemGeneratorNew Instance;
+    public static SystemGeneratorNew Instance
+    {
+        get { return instance; }
+    }
     private static SystemGeneratorNew instance;
 
     private void Awake()
@@ -78,7 +81,7 @@ public class SystemGeneratorNew : MonoBehaviour
 
         system.Name = NameGenerator.GenerateCelestialName(rand); // Generate Name
 
-        // Star
+        // CentralBody
         GenerateCentralBody(system, rand);
 
         // Satellites
@@ -97,8 +100,8 @@ public class SystemGeneratorNew : MonoBehaviour
         sizeDictionary[SizeType.Small] = 2;
         sizeDictionary[SizeType.Tiny] = 1;
 
-        SizeType sizeType = Tools.GetTypeFromWeighted(sizeDictionary, rand);
-        system.Radius = SolarSystem.GetRadiusFromSizeType(sizeType);
+        system.SizeType = Tools.GetTypeFromWeighted(sizeDictionary, rand);
+        system.Radius = SolarSystem.GetRadiusFromSizeType(system.SizeType);
     }
     private void SetOrbitDirection(SolarSystem system, System.Random rand)
     {
@@ -133,11 +136,11 @@ public class SystemGeneratorNew : MonoBehaviour
         // Generate type of CentralBody
         if (centralBodyType == starString)
         {
-            centralBody = GenerateStar();
+            centralBody = GenerateStar(system);
         }
         else if (centralBodyType == blackHoleString)
         {
-            centralBody = GenerateBlackHole();
+            centralBody = GenerateBlackHole(system);
         }
 
         // Generate Temperature
@@ -181,13 +184,13 @@ public class SystemGeneratorNew : MonoBehaviour
         //// Set System Material
         //system.circleSprite.GetComponent<Renderer>().sharedMaterial = star.GetComponent<Renderer>().sharedMaterial;
     }
-    private Star GenerateStar()
+    private Star GenerateStar(SolarSystem system)
     {
-        return Instantiate(StarPrefab, transform);
+        return Instantiate(StarPrefab, system.transform);
     }
-    private BlackHole GenerateBlackHole()
+    private BlackHole GenerateBlackHole(SolarSystem system)
     {
-        return Instantiate(BlackHolePrefab, transform);
+        return Instantiate(BlackHolePrefab, system.transform);
     }
 
     // Satellite
@@ -229,30 +232,34 @@ public class SystemGeneratorNew : MonoBehaviour
             // Set orbitLayer for satellite
             int index = rand.Next(0, orbitLayerList.Count);
             int orbitLayer = orbitLayerList[index];
+            float standardDistance = system.CentralBody.transform.localScale.x + (distanceIncrement * orbitLayer);
             orbitLayerList.RemoveAt(index);
 
             // Instantiate Satellite
-            Satellite satellite = GenerateSatellite(system, rand, orbitLayer, distanceIncrement);
+            List<Satellite> satelliteList = GenerateSatellite(system, rand, orbitLayer, standardDistance);
 
-            // Set variables
-            satellite.SolarSystem = system;
-            satellite.ParentCelestial = system.CentralBody;
+            foreach (Satellite satellite in satelliteList)
+            {
+                // Set variables
+                satellite.SolarSystem = system;
+                satellite.ParentCelestial = system.CentralBody;
 
-            // Add to system's satelliteList
-            system.CentralBody.SatelliteList.Add(satellite);
+                // Add to system's satelliteList
+                system.CentralBody.SatelliteList.Add(satellite); // TODO: ONLY PLANETS/MOONS ?
 
-            // Generate Name
-            satellite.Name = NameGenerator.GenerateCelestialName(rand);
+                // Generate Name
+                satellite.Name = NameGenerator.GenerateCelestialName(rand);
 
-            //// Set Description
-            //string planetType = SetPlanetTypeText(satellite);
-            //string surfaceType = SetSurfaceTypeText(satellite);
-            //satellite.Description = surfaceType + " " + planetType;
+                //// Set Description
+                //string planetType = SetPlanetTypeText(satellite);
+                //string surfaceType = SetSurfaceTypeText(satellite);
+                //satellite.Description = surfaceType + " " + planetType;
+            }
         }
     }
-    private Satellite GenerateSatellite(SolarSystem system, System.Random rand, int orbitLayer, float distanceIncrement)
+    private List<Satellite> GenerateSatellite(SolarSystem system, System.Random rand, int orbitLayer, float standardDistance)
     {
-        Satellite satellite = null;
+        List<Satellite> satelliteList = new List<Satellite>();
 
         // Set type
         Dictionary<string, int> satelliteDictionary = new Dictionary<string, int>();
@@ -267,25 +274,26 @@ public class SystemGeneratorNew : MonoBehaviour
         // Generate satellite
         if (satelliteString == planetString)
         {
-            satellite = GeneratePlanet(system, rand, orbitLayer, distanceIncrement);
+            satelliteList = GeneratePlanet(system, rand, orbitLayer, standardDistance);
         }
         else if (satelliteString == asteroidString)
         {
-            satellite = GenerateAsteroid(system, rand, orbitLayer, distanceIncrement);
+            satelliteList = GenerateAsteroid(system, rand, orbitLayer, standardDistance);
         }
 
-        return satellite;
+        return satelliteList;
     }
-    private Planet GeneratePlanet(SolarSystem system, System.Random rand, int orbitLayer, float distanceIncrement)
+    private List<Satellite> GeneratePlanet(SolarSystem system, System.Random rand, int orbitLayer, float standardDistance)
     {
         // Set distance & angle
-        float distance = system.CentralBody.transform.localScale.x + (distanceIncrement * orbitLayer);
+        float distance = standardDistance;
         int angle = rand.Next(0, 360);
 
         // Set Cartesian Position (Coordinates)
         CartesianCoord cartesianCoord = Tools.ConvertPolarToCartesian(distance, angle);
         Vector3 position = new Vector3(cartesianCoord.x, cartesianCoord.y, 0);
 
+        // Instantiate
         Planet planet = Instantiate(PlanetPrefab, position, Quaternion.identity, system.transform);
 
         // Set Scale
@@ -315,19 +323,92 @@ public class SystemGeneratorNew : MonoBehaviour
                 break;
         }
 
-        return planet;
+        // List
+        List<Satellite> satelliteList = new List<Satellite>();
+        satelliteList.Add(planet);
+
+        return satelliteList;
     }
-    private Asteroid GenerateAsteroid(SolarSystem system, System.Random rand, int orbitLayer, float distanceIncrement)
+    private List<Satellite> GenerateAsteroid(SolarSystem system, System.Random rand, int orbitLayer, float standardDistance)
     {
-        // Set distance & angle
-        float distance = system.CentralBody.transform.localScale.x + (distanceIncrement * orbitLayer);
-        int angle = rand.Next(0, 360);
+        // Belt, empty parent object
+        GameObject belt = new GameObject();
+        belt.name = "Belt";
+        belt.transform.position = Vector3.zero;
+        belt.transform.SetParent(system.transform);
 
-        // Set Cartesian Position (Coordinates)
-        CartesianCoord cartesianCoord = Tools.ConvertPolarToCartesian(distance, angle);
-        Vector3 position = new Vector3(cartesianCoord.x, cartesianCoord.y, 0);
+        // Asteroids, child objects
+        List<Satellite> satelliteList = new List<Satellite>();
+        List<Vector3> positionList = new List<Vector3>();
 
-        return Instantiate(AsteroidPrefab, position, Quaternion.identity, system.transform);
+        int minAsteroidCount = (int)(standardDistance * 0.2f);
+        int maxAsteroidCount = (int)(standardDistance * 0.3f);
+        int asteroidCount = rand.Next(minAsteroidCount, maxAsteroidCount);
+        Debug.Log("Asteroid Count: " + asteroidCount);
+
+        for (int i = 0; i < asteroidCount; i++)
+        {
+            // Set position
+            Vector3 position;
+            float distanceThreshold = 2.5f;
+            int loopCountMax = 100;
+            int loopCount = 0;
+
+            do
+            {
+                // Set distance & angle
+                float distance = standardDistance;
+                int angle = rand.Next(0, 360);
+
+                // Set Cartesian Position (Coordinates)
+                CartesianCoord cartesianCoord = Tools.ConvertPolarToCartesian(distance, angle);
+                position = new Vector3(cartesianCoord.x, cartesianCoord.y, 0);
+
+                loopCount++;
+
+                if (loopCount > loopCountMax)
+                {
+                    Debug.Log("Asteroid Generation Collision Error!");
+                    break;
+                }
+
+            } while (Tools.IsCollision(position, positionList, distanceThreshold));
+
+            // Instantiate
+            Asteroid asteroid = Instantiate(AsteroidPrefab, position, Quaternion.identity, belt.transform);
+
+            // Set Scale
+            int asteroidScaleSeed = rand.Next(0, 5);
+
+            switch (asteroidScaleSeed)
+            {
+                case 0:
+                    asteroid.SizeType = SizeType.Tiny;
+                    asteroid.transform.localScale = new Vector3(0.2f, 0.2f, 1);
+                    break;
+                case 1:
+                    asteroid.SizeType = SizeType.Small;
+                    asteroid.transform.localScale = new Vector3(0.25f, 0.25f, 1);
+                    break;
+                case 2:
+                    asteroid.SizeType = SizeType.Medium;
+                    asteroid.transform.localScale = new Vector3(0.3f, 0.3f, 1);
+                    break;
+                case 3:
+                    asteroid.SizeType = SizeType.Large;
+                    asteroid.transform.localScale = new Vector3(0.35f, 0.35f, 1);
+                    break;
+                case 4:
+                    asteroid.SizeType = SizeType.Huge;
+                    asteroid.transform.localScale = new Vector3(0.4f, 0.4f, 1);
+                    break;
+            }
+
+            satelliteList.Add(asteroid);
+            positionList.Add(asteroid.transform.position);
+        }
+
+        return satelliteList;
     }
 
     private void SetPlanetLists()

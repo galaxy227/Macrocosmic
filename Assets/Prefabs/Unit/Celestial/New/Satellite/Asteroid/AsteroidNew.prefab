@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1987202276243910297
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4150584897494846800, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 3286163911610860551, guid: 83f525f04505a2c4597688c5340727c6, type: 3}
+    - target: {fileID: 4150584897494846801, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_Name
+      value: Asteroid
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4150584897494846803, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5354968654610934365, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+--- !u!1 &2452811465213977544 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4150584897494846801, guid: c7606d67a218d934d90f989d56914cca, type: 3}
+  m_PrefabInstance: {fileID: 1987202276243910297}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-4844459913977633870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2452811465213977544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50c40898ff8dd94a86cba32a63df1e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  Description: 
+  SizeType: 0
+  TemperatureType: 0
+  SolarSystem: {fileID: 0}
+  SatelliteList: []
+  SatelliteType: 0
+  SurfaceType: 0
+  ParentCelestial: {fileID: 0}

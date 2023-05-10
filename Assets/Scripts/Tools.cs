@@ -97,6 +97,21 @@ public static class Tools
     }
 
     // Objects
+    public static bool IsCollision(Vector3 position, List<Vector3> positionList, float distanceThreshold)
+    {
+        foreach (Vector3 otherPosition in positionList)
+        {
+            if (otherPosition != position)
+            {
+                if (Vector3.Distance(otherPosition, position) < distanceThreshold)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
     public static List<GameObject> GetAllChildren(GameObject parent, bool includeParentInList)
     {
         List<GameObject> childList = new List<GameObject>();

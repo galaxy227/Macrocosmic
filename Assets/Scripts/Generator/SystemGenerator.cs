@@ -41,10 +41,23 @@ public class SystemGenerator : MonoBehaviour
     public static float BarrenMultiplier;
     public static float GasGiantMultiplier;
 
-    public static SystemGenerator Instance;
+    public static SystemGenerator Instance
+    {
+        get { return instance; }
+    }
+    private static SystemGenerator instance;
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         OnAwake();
     }
 
@@ -765,8 +778,6 @@ public class SystemGenerator : MonoBehaviour
     // Utility
     private void OnAwake()
     {
-        Instance = this;
-
         SetPlanetMultipliers();
     }
     private void SetPlanetMultipliers()

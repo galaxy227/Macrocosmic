@@ -35,10 +35,10 @@ public class MenuSolarSystem : MonoBehaviour
         {
             // Instantiate SolarSystem
             solarSystem = Instantiate(GalaxyGenerator.Instance.systemPrefab, Vector3.zero, GalaxyGenerator.Instance.systemPrefab.transform.rotation);
-            solarSystem.transform.SetParent(transform, true);
 
             // Generate SolarSystem
-            SystemGenerator.Instance.GenerateSolarSystem(solarSystem, rand);
+            SystemGeneratorNew.Instance.GenerateSolarSystem(solarSystem, rand);
+            solarSystem.transform.SetParent(transform);
 
             if (solarSystem.CentralBody.SatelliteList.Count < minPlanets)
             {
@@ -63,8 +63,6 @@ public class MenuSolarSystem : MonoBehaviour
     }
     private void OnChangeGameState()
     {
-        Debug.Log("ChangeGameState");
-
         if (GameController.Instance.GameState != GameState.MainMenu)
         {
             // Set View

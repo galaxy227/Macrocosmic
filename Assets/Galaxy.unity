@@ -17913,7 +17913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &585200794
 Transform:
   m_ObjectHideFlags: 0
@@ -47674,10 +47674,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075699c06a9506a45aa7c39c976b6685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StarPrefab: {fileID: 0}
-  BlackHolePrefab: {fileID: 0}
-  PlanetPrefab: {fileID: 0}
-  AsteroidPrefab: {fileID: 0}
+  StarPrefab: {fileID: -3008389651355941578, guid: ecd5a1710b78a6a40a4d182d05a6aff4, type: 3}
+  BlackHolePrefab: {fileID: -6925008418545650780, guid: 31cb2123dac81c449bf0712303b40b7a, type: 3}
+  PlanetPrefab: {fileID: -5774667209361918096, guid: 4fe440ff82fb0b446ba87055e54343be, type: 3}
+  AsteroidPrefab: {fileID: -4844459913977633870, guid: 37a1f51f48abcd143ae5feab9e1c6c5b, type: 3}
 --- !u!4 &1836966909
 Transform:
   m_ObjectHideFlags: 0
@@ -51249,7 +51249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1975039756
 Transform:
   m_ObjectHideFlags: 0
@@ -54557,9 +54557,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 115.4292, y: 655.3766}
+  m_AnchoredPosition: {x: 131.06738, y: 642.1366}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5601194, y: 1.1068301}
+  m_Pivot: {x: 0.56826425, y: 1.0945709}
 --- !u!1 &140525682023364179
 GameObject:
   m_ObjectHideFlags: 0

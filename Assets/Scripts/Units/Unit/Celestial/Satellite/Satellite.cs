@@ -40,9 +40,9 @@ public class Satellite : Celestial
     {
         base.OnStart();
 
-        spawnDistance = GetDistance();
+        spawnDistance = GetDistanceFromParentCelestial();
     }
-    public float GetDistance()
+    public float GetDistanceFromParentCelestial()
     {
         float distance = (ParentCelestial.transform.position - transform.position).magnitude;
 
